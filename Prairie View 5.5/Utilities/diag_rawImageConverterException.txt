@@ -1,0 +1,24 @@
+TimeStamp: 6/11/2021 11:23:14 AM
+  Exception: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+  BaseException:  System.DllNotFoundException: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+   at Image_Block_Ripping_Utility.frmMain.PerformCSVConversion(String conversionInfoFilename, String inputDirectory, String outputDirectory, Boolean deleteRAW)
+   at Image_Block_Ripping_Utility.frmMain.StartConversion()
+  StackTrace: at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+  TargetSite: Int32 PerformCSVConversion(System.String, System.String, System.String, Boolean)
+
+TimeStamp: 6/11/2021 11:24:07 AM
+  Exception: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+  BaseException:  System.DllNotFoundException: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+   at Image_Block_Ripping_Utility.frmMain.PerformCSVConversion(String conversionInfoFilename, String inputDirectory, String outputDirectory, Boolean deleteRAW)
+   at Image_Block_Ripping_Utility.frmMain.StartConversion()
+  StackTrace: at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+  TargetSite: Int32 PerformCSVConversion(System.String, System.String, System.String, Boolean)
+
+TimeStamp: 6/11/2021 11:27:26 AM
+  Exception: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+  BaseException:  System.DllNotFoundException: Unable to load DLL 'daq_int.dll': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+   at Image_Block_Ripping_Utility.frmMain.PerformCSVConversion(String conversionInfoFilename, String inputDirectory, String outputDirectory, Boolean deleteRAW)
+   at Image_Block_Ripping_Utility.frmMain.StartConversion()
+  StackTrace: at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+  TargetSite: Int32 PerformCSVConversion(System.String, System.String, System.String, Boolean)
+
