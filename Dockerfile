@@ -34,10 +34,10 @@ COPY ["Prairie View 5.4/", "/apps/Prairie View 5.4/"]
 COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
 
 # Environment is ~700 MB
-COPY environment.yml .
-RUN conda env update --quiet --name base --file environment.yml \
-    && conda clean --all -f -y \
-    && rm environment.yml
+# COPY environment.yml .
+# RUN conda env update --quiet --name base --file environment.yml \
+#     && conda clean --all -f -y \
+#     && rm environment.yml
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
