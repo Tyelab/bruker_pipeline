@@ -41,6 +41,6 @@ COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
-COPY runscript.sh /apps/runscript.sh
+# COPY runscript.sh /apps/runscript.sh
 
-CMD /apps/runscript.sh
+# CMD /apps/runscript.sh
