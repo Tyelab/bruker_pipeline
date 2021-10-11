@@ -18,4 +18,4 @@ COPY build.sh .
 
 RUN ls
 
-RUN build.sh
+CMD build.sh
