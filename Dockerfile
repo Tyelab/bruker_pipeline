@@ -1,4 +1,4 @@
-FROM scottyhardy/docker-wine:stable-5.0.2-nordp
+FROM scottyhardy/docker-wine:latest
 
 LABEL maintainer="Jeremy Delahanty <jdelahanty@salk.edu>"
 
