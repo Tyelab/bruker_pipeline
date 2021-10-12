@@ -1,9 +1,12 @@
+# docker-wine is a compatability layer between Windows and Linux.  Allows you to run Windows programs on Linux machines
 FROM scottyhardy/docker-wine:latest
 
+# All credit for this Dockerfile goes to Chris Roat, a software engineer at Stanford in the Deisseroth Lab
+# His work has been adapted for use in the Tye Lab at the Salk Institute by Jeremy Delahanty.
+# If someone is using the Tye Lab's version, they can contact Jeremy at the email below.
 LABEL maintainer="Jeremy Delahanty <jdelahanty@salk.edu>"
 
 # This adds about 1.6 GB to the image size.
-
 # The entrypoint wrapper runs the wine setup as wineuser. This is required as it otherwise installs Wine as root causing permission problems later
 # The xvfb-run wrapper redirects all displays to a virtual (unseen) display. Wine expects a display to be available.
 # Winetricks
