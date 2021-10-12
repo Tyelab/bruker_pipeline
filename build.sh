@@ -2,7 +2,7 @@
 
 echo "Hello!"
 
-sudo docker run \
+docker run \
        -it \
        --rm \
        --volume=${2}:/data \
@@ -11,3 +11,4 @@ sudo docker run \
        --env=USER_GID=$(id -g ${USER}) \
        --env=USER_HOME=${HOME} \
        --workdir=/home/${USER} \
+       test
