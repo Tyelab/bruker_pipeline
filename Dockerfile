@@ -18,13 +18,13 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     # Once installed, remove the miniconda.sh install script
     && rm ~/miniconda.sh \
     # conda clean removes cached installation files: -a=all, -f=?, -y=yes to all prompts
-    && /opt/conda/bin/conda clean -a -f -y && \
+    && /opt/conda/bin/conda clean -a -f -y \
     # Create soft link to conda profile.d and conda.sh
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     # Echo the conda shell script into bashrc so it starts when container is created
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     # Echo conda activate base into the bashrc so you're in base environment at start
-    echo "conda activate base" >> ~/.bashrc
+    && echo "conda activate base" >> ~/.bashrc
 
 # The Tye lab does not have data collected from Prairie View 5.4, but v5.4 has
 # been maintained here in case other groups need it.
