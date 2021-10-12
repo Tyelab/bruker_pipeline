@@ -19,4 +19,4 @@ docker run \
        --hostname=bruker-ripper \
        --name=bruker-ripper \
        --shm-size=1g \
-       --env=TZ=America/Los_Angeles \
+       --env=TZ=America/Los_Angeles
