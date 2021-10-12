@@ -41,4 +41,4 @@ COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
 COPY *.py /apps/
 COPY build.sh /apps/build.sh
 
-CMD /bin/bash/
+CMD /bin/bash
