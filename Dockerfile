@@ -45,3 +45,6 @@ COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
+COPY build.sh /apps/build.sh
+
+CMD /bin/bash/build.sh
