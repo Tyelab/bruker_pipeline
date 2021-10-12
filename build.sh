@@ -2,7 +2,7 @@
 
 echo "Hello!"
 
-docker run \
+sudo docker run \
        -it \
        --rm \
        --volume=${2}:/data \
