@@ -39,4 +39,7 @@ COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
-COPY build.sh /apps/build.sh
+COPY build_container.sh /apps/build_container.sh
+
+# In order to use interactive mode properly, /bin/bash must be executed so there's a terminal available
+CMD /bin/bash
