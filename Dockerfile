@@ -8,10 +8,8 @@ LABEL maintainer="Jeremy Delahanty <jdelahanty@salk.edu>"
 # The xvfb-run wrapper redirects all displays to a virtual (unseen) display. Wine expects a display to be available.
 # Winetricks
 # Install visual studio C++ 2015
-RUN /usr/bin/entrypoint \
-    && xvfb-run \
-    && winetricks -q \
-    && vcrun2015
+# This all needs to be run on the same line for some reason, otherwise it crashes
+RUN /usr/bin/entrypoint xvfb-run winetricks -q vcrun2015
 
 # Create path for conda and add it to the container's path
 ENV PATH /opt/conda/bin:$PATH
