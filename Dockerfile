@@ -8,6 +8,18 @@ LABEL maintainer="Jeremy Delahanty <jdelahanty@salk.edu>"
 # For some reason, you have to run all this at once otherwise it crashes...
 RUN /usr/bin/entrypoint xvfb-run winetricks -q vcrun2015
 
+# Create path for conda and add it to the container's path
+ENV PATH /opt/conda/bin:$PATH
+
+# Install conda by running webget (wget)
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    /opt/conda/bin/conda clean -tipsy && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+
 # The Tye lab does not have data collected from Prairie View 5.4, but v5.4 has
 # been maintained here in case other groups need it.
 COPY ["Prairie View 5.4/", "/apps/Prairie View 5.4/"]
