@@ -12,7 +12,7 @@ RUN /usr/bin/entrypoint \
     && winetricks -q \
 
 # Install visual studio C++ code from 2015
-    && vcrun2015 \
+    && vcrun2015
 
 # Create path for conda and add it to the container's path
 ENV PATH /opt/conda/bin:$PATH
