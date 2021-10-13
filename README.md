@@ -38,6 +38,19 @@ Unsure what -b stands for, I'm guessing that -p means to set a path. Unsure why 
 - conda clean -tipsy
 Unsure what -tipsy does, can't find documentation for it. Conda clean removes any unusued packages.
 
+Tipsy is simply the list of flags -t -i -p -s -y.
+
+-t or --tarballs
+-i or --index-cache
+-p or --packages
+-s or ... eh that was not documented, it probably relates to --source-cache and this issue
+-y or --yes
+
+https://github.com/jupyter/docker-stacks/issues/861
+Per this issue, using `-all -f -y` are the correct flags.
+
+Interestingly, Chris uses `-all -f -y` later in the Dockerfile.
+
 - ln -s
 Unsure what the ln and the -s does, I believe it has to do with setting links but can't be sure.
 
