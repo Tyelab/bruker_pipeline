@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Create argument parser processing raw files
     rip_parser = argparse.ArgumentParser(
         description="Perform Bruker Raw Image Ripping",
-        epilog="Let it rip! Tell Jeremy what this references to get a cookie!",
+        epilog="Let it rip!",
         prog="Bruker Image Ripping Utility"
         )
 
