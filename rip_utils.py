@@ -2,7 +2,7 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-base_path = Path(".")
+base_path = Path("/snl/scratch25/snlkt-playground/raw")
 ripper_path = Path("/snlkt/data/bruker_pipeline/")
 
 
@@ -25,8 +25,6 @@ def rip(rip_args: dict):
 
     needs_conversion = conversion_check(team, project)
 
-    print(needs_conversion)
-
     ripper = determine_ripper(needs_conversion[0], ripper_path)
 
 
@@ -37,6 +35,8 @@ def conversion_check(team: str, project: str) -> list:
     raw_paths = [
         path for path in raw_path.glob("*/*/*_raw*")
     ]
+
+    print(raw_paths)
 
     has_tiffs = [
         path.parent for path in raw_path.glob("*/*/*_raw*/tiffs")
