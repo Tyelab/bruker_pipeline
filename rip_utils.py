@@ -6,7 +6,7 @@ base_path = Path(".")
 ripper_path = Path("/snlkt/data/bruker_pipeline/")
 
 
-def rip(rip_args):
+def rip(rip_args: dict):
     """
     Unites ripping functions together to perform Raw Image Ripping
 
