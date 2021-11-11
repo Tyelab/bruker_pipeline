@@ -1,7 +1,18 @@
 # bruker_pipeline
 Data processing pipeline for data from the Bruker Ultima microscope in conjunction with bruker_control.
 
-Notes:
+## Purpose
+Converting data from the RAW format Bruker outputs into .ome.tiff files and then to .h5/.zarr requires a pipeline of its own. The goals for this repository are as follows:
+- Perform image ripping in a standardized way that can be performed without requiring the use of the local machine (although it will be possible to do it on the local machine and perhaps always done there after we have upgraded ethernet, to be determined)
+- Voltage Recording ripping should similarly be performed but without the intermittant file generation (as there are no files other than the raw data generated)
+- Write .ome.tiff files to snlscratch25 and then put concatenated .h5/.zarr data back onto the `snlktdata/_DATA` directory. This will then be linked to an `NWB File` in the `raw` folder of the subject that had their images ripped.
+- This processing should follow an event driven architecture where the moment a file transfer is complete to the server, a machine like Cheetos can immediately perform ripping, concatenation, and, preferrably, pre-processing via Suite2p/ezCalcium if a known template for a brain structure/project is available.
+- Suite2p/ezCalcium processing of these concatenated files will be done preferentially in the cluster but will not be made exclusive to it. Until we have 10GB lines to/from our server (which is allegedly something coming in the future) to our lab's workstation machines, processing on the cluster should be the first choice in my (Jeremy's) opinion.
+
+This repository will remain specific for the ripping process from Bruker. Other 2P procesing could maybe follow a similar structure to the Deisseroth's lab's two-photon repo that is forked here.
+
+
+## Notes:
 - /usr/bin/entrypoint
 
 - [xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml)
