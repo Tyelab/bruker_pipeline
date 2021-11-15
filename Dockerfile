@@ -34,8 +34,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 
 # The Tye lab does not have data collected from Prairie View 5.4, but v5.4 has
 # been maintained here in case other groups need it.
-COPY ["Prairie View 5.4/", "/apps/Prairie View 5.4/"]
-COPY ["Prairie View 5.5/", "/apps/Prairie View 5.5/"]
+COPY ["prairie_view", "/apps/prairie_view/"]
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/

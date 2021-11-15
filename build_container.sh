@@ -13,6 +13,7 @@ sudo docker run \
        -it \
        --rm \
        --volume=/snlkt/data/raw:/data \
+       --volume=/snl/scratch25/snlkt-playground/:/tmp \
        --env=USER_NAME=${USER} \
        --env=USER_UID=$(id -u ${USER}) \
        --env=USER_GID=$(id -g ${USER}) \
