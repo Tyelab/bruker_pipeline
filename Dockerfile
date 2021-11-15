@@ -1,7 +1,8 @@
-# docker-wine is a compatability layer between Windows and Linux.  Allows you to run Windows programs on Linux machines
-FROM scottyhardy/docker-wine:latest
+# docker-wine is a compatability layer between Windows and Linux.  Allows you to run Windows programs on Linux machines.
+# NOTE: Do NOT use latest docker-wine repo, it will fail to use Visual C++ correctly for some reason...
+FROM scottyhardy/docker-wine:stable-5.0.2-nordp
 
-# All credit for this Dockerfile goes to Chris Roat, a software engineer at Stanford in the Deisseroth Lab
+# All credit for this Dockerfile and associated ripping tools goes to Chris Roat, a software engineer at Stanford in the Deisseroth Lab
 # His work has been adapted for use in the Tye Lab at the Salk Institute by Jeremy Delahanty.
 # If someone is using the Tye Lab's version, they can contact Jeremy at the email below.
 LABEL maintainer="Jeremy Delahanty <jdelahanty@salk.edu>"
@@ -38,7 +39,7 @@ COPY ["prairie_view", "/apps/prairie_view/"]
 
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
-COPY build_container.sh /apps/build_container.sh
+COPY runscript.sh /apps/runscript.sh
 
 # In order to use interactive mode properly, /bin/bash must be executed so there's a terminal available
 CMD /bin/bash

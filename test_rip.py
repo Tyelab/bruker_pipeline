@@ -17,7 +17,7 @@ import argparse
 from pathlib import Path
 
 # Static directory for teams in the raw directory of Docker Container
-teams_path = Path(".")
+teams_path = Path("/data/")
 
 # Make list of authorized teams that can use the Bruker Scope for imaging
 authorized_teams = ["specialk", "Deryn"]

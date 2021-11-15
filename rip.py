@@ -80,12 +80,14 @@ def raw_to_tiff(dirname, ripper):
     # we have to pop up one level and use -AddRawFileWithSubFolders.
     cmd += [
         ripper,
-        '-IncludeSubFolders',
-        '-AddRawFileWithSubFolders',
-        str(dirname),
-        '-SetOutputDirectory',
-        str(dirname),
-        '-Convert',
+        "-KeepRaw",
+        "-DoNotRipToInputDirectory",
+        "-IncludeSubFolders",
+        "-AddRawFileWithSubFolders",
+        dirname,
+        "-SetOutputDirectory",
+        dirname,
+        "-Convert",
     ]
 
     # Run a subprocess to execute the ripping.  Note this is non-blocking because the
