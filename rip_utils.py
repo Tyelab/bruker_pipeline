@@ -7,8 +7,8 @@ import subprocess
 import time
 import logging
 
-base_path = Path("/data/")
-ripper_path = Path("/apps/")
+BASE_PATH = Path("/tmp/")
+RIPPER_PATH = Path("/apps/prairie_view/")
 
 logger = logging.getLogger(__name__)
 
@@ -36,28 +36,26 @@ def rip(rip_args: dict):
             project will be processed.
     """
 
-    team = rip_args["team"]
-
     project = rip_args["project"]
 
-    needs_conversion = conversion_check(team, project)
+    needs_conversion = conversion_check(project)
 
-    ripper = determine_ripper(needs_conversion[0], ripper_path)
+    ripper = determine_ripper(needs_conversion[0], RIPPER_PATH)
 
     raw_to_tiff(needs_conversion[0], ripper)
 
 
 
-def conversion_check(team: str, project: str) -> list:
+def conversion_check(project: str) -> list:
 
-    raw_path = base_path / team / project / "2p"
+    raw_path = BASE_PATH / project
 
     raw_paths = [
-        path for path in raw_path.glob("*/*/*_raw*") if path.is_dir()
+        path for path in raw_path.glob("*/*_raw") if path.is_dir()
     ]
 
     has_tiffs = [
-        path.parent for path in raw_path.glob("*/*/*_raw*/tiffs")
+        path.parent for path in raw_path.glob("*/*_raw*/tiffs")
     ]
 
     needs_conversion = list(set(raw_paths) - set(has_tiffs))
@@ -78,12 +76,12 @@ def determine_ripper(data_dir, ripper_dir):
 
 
     # Prairie View versions are given in the form A.B.C.D.
-    match = re.match(r'^(?P<majmin>\d+\.\d+)\.\d+\.\d+$', version)
+    match = re.match(r'^\d+\.\d+\.\d+\.\d+$', version)
 
     if not match:
         raise RippingError('Could not parse version (expected A.B.C.D): %s' % version)
 
-    version = 'Prairie View ' + match.group('majmin')
+    version = match.group(0)
 
     # For some reason f string doesn't work here, so this string is built in the version line above
     ripper = ripper_dir / version / 'Utilities' / 'Image-Block Ripping Utility.exe'
@@ -101,7 +99,7 @@ def raw_to_tiff(dirname, ripper):
         return list(sorted(dirname.glob('*RAWDATA*')))
 
     def get_tiffs():
-        return set(dirname.glob('*.ome.tif'))
+        return set(dirname.glob('tiffs/*.ome.tif'))
 
     filelists = get_filelists()
     if not filelists:

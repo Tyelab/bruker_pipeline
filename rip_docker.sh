@@ -19,7 +19,7 @@ fi
 # --xvfb
 # --name 
 # https://github.com/scottyhardy/docker-wine/blob/master/docker-wine
-docker run \
+sudo docker run \
        -it \
        --rm \
        --volume=${2}:/data \

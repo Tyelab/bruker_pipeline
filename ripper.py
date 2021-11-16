@@ -17,16 +17,16 @@ import argparse
 from pathlib import Path
 
 # Static directory for teams in the raw directory of Docker Container
-teams_path = Path("/data/")
+# teams_path = Path("/data/")
 
 # Make list of authorized teams that can use the Bruker Scope for imaging
-authorized_teams = ["specialk", "Deryn"]
+# authorized_teams = ["specialk", "Deryn"]
 
 # Generate valid team choices for argparser variable "team" by checking the
 # directories accessible to the container
-team_choices = [
-    team.name for team in teams_path.glob("*") if team.name in authorized_teams
-]
+# team_choices = [
+#     team.name for team in teams_path.glob("*") if team.name in authorized_teams
+# ]
 
 ###############################################################################
 # Main Function
@@ -41,28 +41,15 @@ if __name__ == "__main__":
         epilog="Let it rip!",
         prog="Bruker Image Ripping Utility"
         )
-
-    # Add team name argument
-    rip_parser.add_argument(
-        '-t', '--team',
-        type=str,
-        action='store',
-        dest='team',
-        help='Team Name (optional)',
-        choices=team_choices,
-        default=False,
-        required=False
-    )
-
+        
     # Add project name argument
     rip_parser.add_argument(
         '-p', '--project',
         type=str,
         action='store',
         dest='project',
-        help='Project Name (optional)',
-        default=False,
-        required=False
+        help='Project Name ie. specialk_cs (Required)',
+        required=True
     )
 
     rip_parser.add_argument(

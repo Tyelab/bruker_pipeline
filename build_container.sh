@@ -23,7 +23,7 @@ sudo docker run \
        --env=XVFB_SERVER=:95 \
        --env=XVFB_SCREEN=0 \
        --env=XVFB_RESOLUTION=320x240x8 \
-       --env=DISPLAY=:95 \
+       --env=DISPLAY=${DISPLAY} \
        --hostname=bruker-ripper \
        --name=bruker-ripper \
        --shm-size=1g \

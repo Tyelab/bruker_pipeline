@@ -33,6 +33,12 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc
 
+# Environment is ~700 MB
+COPY environment.yml .
+RUN conda env update --quiet --name base --file environment.yml \
+    && conda clean --all -f -y \
+    && rm environment.yml
+
 # The Tye lab does not have data collected from Prairie View 5.4, but v5.4 has
 # been maintained here in case other groups need it.
 COPY ["prairie_view", "/apps/prairie_view/"]

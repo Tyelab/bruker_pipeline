@@ -76,19 +76,23 @@ def raw_to_tiff(dirname, ripper):
     else:
         cmd = []
 
+    print(str(dirname))
     # Normally, the fname is passed to -AddRawFile.  But there is a bug in the software, so
     # we have to pop up one level and use -AddRawFileWithSubFolders.
     cmd += [
         ripper,
-        "-KeepRaw",
-        "-DoNotRipToInputDirectory",
-        "-IncludeSubFolders",
-        "-AddRawFileWithSubFolders",
-        dirname,
-        "-SetOutputDirectory",
-        dirname,
-        "-Convert",
+        '-KeepRaw',
+        '-IncludeSubFolders',
+        '-AddRawFileWithSubFolders',
+        str(dirname),
+        '-SetOutputDirectory',
+        str(dirname),
+        '-Convert'
     ]
+
+    print(cmd)
+
+    input()
 
     # Run a subprocess to execute the ripping.  Note this is non-blocking because the
     # ripper never exists.  (If we blocked waiting for it, we'd wait forever.)  Instead,
@@ -152,7 +156,7 @@ if __name__ == "__main__":
                         help='Directory containing RAWDATA and Filelist.txt files for ripping')
     parser.add_argument('--rippers_directory',
                         type=pathlib.Path,
-                        default='/apps',
+                        default='/apps/prairie_view',
                         help='Directory container versions of Bruker Image Block Ripping Utility.')
     args = parser.parse_args()
     ripper_path = determine_ripper(args.directory, args.rippers_directory)

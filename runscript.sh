@@ -21,4 +21,4 @@ cp -r /home/wineuser/.wine "${WINEPREFIX}"
 echo
 echo "Executing rip. One err and four fixme statements are OK."
 echo
-${CMDPREFIX} /usr/bin/python3 /apps/rip.py --directory $1 --rippers_directory $2
+${CMDPREFIX} /usr/bin/python3 /apps/rip.py --directory $1
