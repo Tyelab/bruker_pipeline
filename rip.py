@@ -85,10 +85,6 @@ def raw_to_tiff(dirname, ripper):
         '-Convert'
     ]
 
-    print(cmd)
-
-    input()
-
     # Run a subprocess to execute the ripping.  Note this is non-blocking because the
     # ripper never exists.  (If we blocked waiting for it, we'd wait forever.)  Instead,
     # we wait for the input files to be consumed and/or output files to be finished.
