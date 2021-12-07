@@ -25,19 +25,19 @@ ENV PATH /opt/conda/bin:$PATH
 # Create soft link to conda profile.d and conda.sh
 # Echo the conda shell script into bashrc so it starts when container is created
 # Echo conda activate base into the bashrc so you're in base environment at start
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
-    && /bin/bash ~/miniconda.sh -b -p /opt/conda \
-    && rm ~/miniconda.sh \
-    && /opt/conda/bin/conda clean -a -f -y \
-    && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
-    && echo "conda activate base" >> ~/.bashrc
+# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
+#     && /bin/bash ~/miniconda.sh -b -p /opt/conda \
+#     && rm ~/miniconda.sh \
+#     && /opt/conda/bin/conda clean -a -f -y \
+#     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
+#     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
+#     && echo "conda activate base" >> ~/.bashrc
 
 # Environment is ~700 MB
 COPY environment.yml .
-RUN conda env update --quiet --name base --file environment.yml \
-    && conda clean --all -f -y \
-    && rm environment.yml
+# RUN conda env update --quiet --name base --file environment.yml \
+#     && conda clean --all -f -y \
+#     && rm environment.yml
 
 # The Tye lab does not have data collected from Prairie View 5.4, but v5.4 has
 # been maintained here in case other groups need it.
@@ -48,4 +48,4 @@ COPY *.py /apps/
 COPY runscript.sh /apps/runscript.sh
 
 # In order to use interactive mode properly, /bin/bash must be executed so there's a terminal available
-CMD /bin/bash
+# CMD /bin/bash
