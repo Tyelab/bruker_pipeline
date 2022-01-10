@@ -16,3 +16,4 @@ dependencies:
   - yapf
   - pip:
       - suite2p==0.7.5
+      - lxml
