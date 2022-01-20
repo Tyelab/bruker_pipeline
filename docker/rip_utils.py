@@ -6,9 +6,13 @@ import platform
 import subprocess
 import time
 import logging
+import lxml.etree
+import sys
 
-BASE_PATH = Path("/tmp/")
+BASE_PATH = Path("/data/specialk/lh/2p/LHE042/20211009/20211009_LHE042_plane1_-336.525_raw-102")
 RIPPER_PATH = Path("/apps/prairie_view/")
+
+local_path = Path("C:/Users/jdelahanty.SNL/Desktop/test_env/")
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +27,7 @@ RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
 
-def rip(rip_args: dict):
+def rip_images(rip_args: dict):
     """
     Unites ripping functions together to perform Raw Image Ripping
 
@@ -38,41 +42,38 @@ def rip(rip_args: dict):
 
     project = rip_args["project"]
 
-    needs_conversion = conversion_check(project)
+    # needs_conversion = conversion_check(project)
 
-    ripper = determine_ripper(needs_conversion[0], RIPPER_PATH)
+    ripper = determine_ripper(BASE_PATH, RIPPER_PATH)
 
-    raw_to_tiff(needs_conversion[0], ripper)
-
-
-
-def conversion_check(project: str) -> list:
-
-    raw_path = BASE_PATH / project
-
-    raw_paths = [
-        path for path in raw_path.glob("*/*_raw") if path.is_dir()
-    ]
-
-    has_tiffs = [
-        path.parent for path in raw_path.glob("*/*_raw*/tiffs")
-    ]
-
-    needs_conversion = list(set(raw_paths) - set(has_tiffs))
-
-    return needs_conversion
-
+    # raw_to_tiff(needs_conversion[0], ripper)
 
 def determine_ripper(data_dir, ripper_dir):
     """Determine which version of the Prairie View ripper to use based on reading metadata."""
     env_files = [path for path in data_dir.glob('*.env')]
+    print(env_files)
 
     if len(env_files) != 1:
         raise RippingError('Only expected 1 env file in %s, but found: %s' % (data_dir, env_files))
 
-    tree = ET.parse(str(env_files[0]))
-    root = tree.getroot()
+    try:
+
+        tree = ET.parse(str(env_files[0]))
+        root = tree.getroot()
+    
+    except ET.ParseError:
+
+        print("Caught exception")
+
+        parser = lxml.etree.XMLParser(recover=True)
+        root = lxml.etree.parse(str(env_files[0]), parser).getroot()
+
+    
     version = root.attrib['version']
+
+    print(version)
+
+    sys.exit()
 
 
     # Prairie View versions are given in the form A.B.C.D.
@@ -186,3 +187,20 @@ def raw_to_tiff(dirname, ripper):
             return
 
     raise RippingError('Killed ripper because it did not finish within %s seconds' % RIP_TOTAL_WAIT_SECS)
+
+
+def conversion_check(project: str) -> list:
+
+    raw_path = BASE_PATH / project
+
+    raw_paths = [
+        path for path in raw_path.glob("*/*_raw") if path.is_dir()
+    ]
+
+    has_tiffs = [
+        path.parent for path in raw_path.glob("*/*_raw*/tiffs")
+    ]
+
+    needs_conversion = list(set(raw_paths) - set(has_tiffs))
+
+    return needs_conversion

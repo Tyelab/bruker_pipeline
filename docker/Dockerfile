@@ -21,7 +21,7 @@ ENV PATH /opt/conda/bin:$PATH
 # Install conda by running webget (wget) then rename download to miniconda.sh and place in home directory
 # Run the miniconda installation script in the path /opt/conda
 # Once installed, remove the miniconda.sh install script
-# conda clean removes cached installation files: -a=all, -f=?, -y=yes to all prompts
+# conda clean removes cached installation files: -a=all, -f=force presumably, -y=yes to all prompts
 # Create soft link to conda profile.d and conda.sh
 # Echo the conda shell script into bashrc so it starts when container is created
 # Echo conda activate base into the bashrc so you're in base environment at start
@@ -46,6 +46,3 @@ COPY ["prairie_view", "/apps/prairie_view/"]
 # Copy code last to avoid busting the cache.
 COPY *.py /apps/
 COPY runscript.sh /apps/runscript.sh
-
-# In order to use interactive mode properly, /bin/bash must be executed so there's a terminal available
-CMD /bin/bash

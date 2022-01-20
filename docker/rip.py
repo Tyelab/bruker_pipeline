@@ -3,12 +3,10 @@
 import argparse
 import atexit
 import logging
-import pathlib
+from pathlib import Path
 import platform
-import re
 import subprocess
 import time
-import xml.etree.ElementTree as ET
 
 logger = logging.getLogger(__name__)
 
@@ -19,36 +17,37 @@ RIP_TOTAL_WAIT_SECS = 3600  # Total time to wait for ripping before killing it.
 RIP_EXTRA_WAIT_SECS = 10  # Extra time to wait after ripping is detected to be done.
 RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 
+RIPPER_NAME = Path("Image-BlockRippingUtility.exe")
+RIPPER_DIRECTORY = Path("/apps/prairie_view/")
+SCRATCH_DIRECTORY = Path("/tmp/")
+DATA_DIRECTORY = Path("/data/")
+
 
 class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
 
 
-def determine_ripper(data_dir, ripper_dir):
-    """Determine which version of the Prairie View ripper to use based on reading metadata."""
-    env_files = list(data_dir.glob('*.env'))
-    if len(env_files) != 1:
-        raise RippingError('Only expected 1 env file in %s, but found: %s' % (data_dir, env_files))
-
-    tree = ET.parse(str(data_dir / env_files[0]))
-    root = tree.getroot()
-    version = root.attrib['version']
-
-    ripper = ripper_dir / f'{version}' / 'Utilities' / 'Image-Block Ripping Utility.exe'
-    logger.info('Data created with Prairie version %s, using ripper: %s', version, ripper)
-    return ripper
-
-
-def raw_to_tiff(dirname, ripper):
+def raw_to_tiff(raw_dir, ripper_version):
     """Convert Bruker RAW files to TIFF files using ripping utility specified with `ripper`."""
+
+    ripper = RIPPER_DIRECTORY / ripper_version / RIPPER_NAME
+
+    data_dir = DATA_DIRECTORY / raw_dir
+
+    tmp_tiff_dir = SCRATCH_DIRECTORY / raw_dir
+
+    dat = str(data_dir)
+
+    logging.info("Path available %s" % dat)
+
     def get_filelists():
-        return list(sorted(dirname.glob('*Filelist.txt')))
+        return list(sorted((data_dir).glob('*Filelist.txt')))
 
     def get_rawdata():
-        return list(sorted(dirname.glob('*RAWDATA*')))
+        return list(sorted((data_dir).glob('*RAWDATA*')))
 
     def get_tiffs():
-        return set(dirname.glob('*.ome.tif'))
+        return set((tmp_tiff_dir).glob('*.ome.tif'))
 
     filelists = get_filelists()
     if not filelists:
@@ -56,11 +55,11 @@ def raw_to_tiff(dirname, ripper):
 
     rawdata = get_rawdata()
     if not rawdata:
-        raise RippingError('No RAWDATA files present in %s' % dirname)
+        raise RippingError('No RAWDATA files present in %s' % raw_dir)
 
     tiffs = get_tiffs()
     if tiffs:
-        raise RippingError('Cannot rip because tiffs already exist in %s (%d found)' % (dirname, len(tiffs)))
+        raise RippingError('Cannot rip because tiffs already exist in %s (%d found)' % (raw_dir, len(tiffs)))
 
     logger.info('Ripping from:\n %s\n %s', '\n '.join([str(f) for f in filelists]),
                 '\n '.join([str(f) for f in rawdata]))
@@ -71,24 +70,26 @@ def raw_to_tiff(dirname, ripper):
     else:
         cmd = []
 
-    print(str(dirname))
     # Normally, the fname is passed to -AddRawFile.  But there is a bug in the software, so
     # we have to pop up one level and use -AddRawFileWithSubFolders.
     cmd += [
         ripper,
-        '-KeepRaw',
-        '-IncludeSubFolders',
-        '-AddRawFileWithSubFolders',
-        str(dirname),
-        '-SetOutputDirectory',
-        str(dirname),
-        '-Convert'
+        "-KeepRaw",
+        "-DoNotRipToInputDirectory",
+        "-IncludeSubFolders",
+        "-AddRawFileWithSubFolders",
+        str(data_dir),
+        "-SetOutputDirectory",
+        str(SCRATCH_DIRECTORY),
+        "-Convert"
     ]
 
     # Run a subprocess to execute the ripping.  Note this is non-blocking because the
     # ripper never exists.  (If we blocked waiting for it, we'd wait forever.)  Instead,
     # we wait for the input files to be consumed and/or output files to be finished.
     process = subprocess.Popen(cmd)
+
+    logger.info("Ripping has started!")
 
     # Register a cleanup function that will kill the ripping subprocess.  This handles the cases
     # where someone hits Cntrl-C, or the main program exits for some other reason.  Without
@@ -125,7 +126,7 @@ def raw_to_tiff(dirname, ripper):
         logging.info('  Found rawdata files: %s', rawdata or None)
         logging.info('  Found this many tiff files: %s', len(tiffs))
 
-        if not filelists and not rawdata and not tiffs_changed:
+        if not tiffs_changed:
             logging.info('Detected ripping is complete')
             time.sleep(RIP_EXTRA_WAIT_SECS)  # Wait before terminating ripper, just to be safe.
             logging.info('Killing ripper')
@@ -137,18 +138,30 @@ def raw_to_tiff(dirname, ripper):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s.%(msecs)03d %(module)s:%(lineno)s %(levelname)s %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
-    parser = argparse.ArgumentParser(description='Preprocess 2-photon raw data into individual tiffs')
+    parser = argparse.ArgumentParser(description='Preprocess 2-photon raw data into individual tiffs.')
     parser.add_argument('--directory',
-                        type=pathlib.Path,
+                        type=str,
                         required=True,
-                        help='Directory containing RAWDATA and Filelist.txt files for ripping')
-    parser.add_argument('--rippers_directory',
-                        type=pathlib.Path,
-                        default='/apps/prairie_view',
-                        help='Directory container versions of Bruker Image Block Ripping Utility.')
+                        help='Directory containing RAWDATA and Filelist.txt files for ripping.')
+    parser.add_argument('--ripper_version',
+                        type=str,
+                        help='Prairie View version from environment file.')
+    # parser.add_argument('--num_images',
+    #                     type=int,
+    #                     required=True,
+    #                     help='Total number of images to be converted for the recording.')
+    parser.add_argument('--log_file',
+                        type=str,
+                        required=True,
+                        dest="log",
+                        help='Name of logfile for container.')
     args = parser.parse_args()
-    ripper_path = determine_ripper(args.directory, args.rippers_directory)
-    raw_to_tiff(args.directory, ripper_path)
+    logging.basicConfig(level=logging.INFO,
+                    filename="/logs/" + args.log,
+                    format='%(asctime)s.%(msecs)03d %(module)s:%(lineno)s %(levelname)s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+
+
+    logging.info("Container Started for %s" % args.directory)
+
+    raw_to_tiff(args.directory, args.ripper_version)
