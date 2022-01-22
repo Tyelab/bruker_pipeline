@@ -1,25 +1,16 @@
 from pathlib import Path
+from attr import Attribute
 import lxml.etree
 import subprocess
+import re
+
+from matplotlib import container
 
 RIPPER_DIRECTORY = Path("/snlkt/data/bruker_pipeline/docker/prairie_view/")
 TRANSFER_DIRECTORY = Path("/snlkt/data/bruker_pipeline/docker")
 
 
 # TODO: Put checks for raw files/if tiffs or H5/zarrs exist already
-
-# Unlikely to be used as we can't pass objects through the shell scripts...
-class RawData:
-    """
-    Class built for holding information related to raw data being processed.
-    """
-
-    def __init__(self, data_path, ripper, num_images):
-
-        self.data_path = data_path
-        self.ripper = ripper
-        self.num_images = num_images
-
 
 class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
@@ -30,7 +21,7 @@ def xml_parser(xml_path: Path) -> lxml.etree._ElementTree:
     """
 
     # Define lxml parser that's used for reading the tree with
-    # recover=True so it can pass the badly formed XML line
+    # recover=True so it can pass badly formed XML lines
     parser = lxml.etree.XMLParser(recover=True)
 
     # Get the "root" of the tree for parsing specific elements
@@ -111,30 +102,43 @@ def get_raw_data(recording_list_dir: Path) -> list:
             for path in f:
                 # Use rstrip to remove trailing characters at the
                 # end of each path. Creating files for conversion
-                # using text editors manner yields newlines (\n)
+                # using text editors yields newlines (\n)
                 # when read into Python's open function it seems.
                 directory = Path(path.rstrip("\n"))
                 raw_dirs.append(directory)
                 
     return raw_dirs
 
-
-x = get_raw_data(TRANSFER_DIRECTORY)
-
-ripper, num_channels = parse_env_file(x[0])
-num_images = determine_num_images(x[0], num_channels)
-
 # Command order: build_container.sh which is the shell script that actually puts the container together
 # Args:
-# 1: Animal Name used for the ripper container name
+# 1: Animal Name and plane used for the ripper container name
 # 2: Directory of raw data
 # 3: Truncated name for appending to /data/ directory in container.
-# TODO: Animal name needs to include plane number since one animal may have multiple planes!
 # 4: Version of ripper to use
 # 5: Total number of images the container should expect to find when conversion is finished.
 
-cmd = ["docker/build_container.sh %s %s %s %s %s" % ((str(x[0].parents[1].name) + "-SNLKT-ripper"), str(x[0].parent), x[0].name, ripper.parent.name, num_images)]
 
-print(cmd)
+if __name__ == "__main__":
 
-process = subprocess.Popen(cmd, shell=True)
+    conversion_list = get_raw_data(TRANSFER_DIRECTORY)
+
+    for directory in conversion_list:
+
+        ripper, num_channels = parse_env_file(directory)
+        num_images = determine_num_images(directory, num_channels)
+
+        try:
+            plane_number = re.search("plane\d", directory.name).group()
+
+        except AttributeError:
+            
+            plane_number = "0"
+
+        container_name = "-".join([directory.parents[1].name, plane_number, "SNLKT-ripper"])
+
+        cmd = ["docker/build_container.sh %s %s %s %s %s" % (container_name, str(directory.parent), directory.name, ripper.parent.name, num_images)]
+
+        process = subprocess.Popen(cmd, shell=True)
+
+        print("Starting container for:", container_name)
+
