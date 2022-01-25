@@ -7,6 +7,7 @@ from pathlib import Path
 import platform
 import subprocess
 import time
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,6 @@ DATA_DIRECTORY = Path("/data/")
 
 class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
-
 
 def raw_to_tiff(raw_dir, ripper_version):
     """Convert Bruker RAW files to TIFF files using ripping utility specified with `ripper`."""
@@ -91,6 +91,47 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     logger.info("Ripping has started!")
 
+    # Given how filenames are created/named from Prairie View and Bruker Control, the
+    # csv files are converted first. Because we started the ripper just before this point,
+    # a csv file should now be present in the tmp_tiff_dir. We can poll the size of this
+    # with os.stat(path).st_size after globbing it from the path
+
+    # TODO: Ripping .csv and ripping tiffs should be their own functions inside this script
+
+    behavior_glob = tmp_tiff_dir.glob("*.csv")
+
+    behavior_csv = behavior_glob[0]
+
+    logger.info("Found .csv file for behavior: ", behavior_csv)
+
+    ripping_csv = True
+
+    behavior_csv_size = os.stat(behavior_csv).st_size
+
+    logger.info("Voltage Recording .csv size: ", behavior_csv_size)
+
+    while ripping_csv:
+
+        new_behavior_csv_size = os.stat(behavior_csv).st_size
+
+        diff_csv_size = (behavior_csv_size != new_behavior_csv_size)
+
+        if not diff_csv_size:
+
+            behavior_csv_size = new_behavior_csv_size
+
+            logger.info("Still ripping voltage recording...")
+
+            logger.info("Voltage Recording .csv size: ", behavior_csv_size)
+
+            time.sleep(RIP_POLL_SECS)
+        
+        else:
+
+            ripping_csv = False
+    
+    logger.info("Voltage .csv Ripping Complete!")
+
     # Register a cleanup function that will kill the ripping subprocess.  This handles the cases
     # where someone hits Cntrl-C, or the main program exits for some other reason.  Without
     # this cleanup function, the subprocess will just continue running in the background.
@@ -103,13 +144,15 @@ def raw_to_tiff(raw_dir, ripper_version):
                 p_sec += 1
         if p_sec >= timeout_sec:
             process.kill()
-        logger.info('cleaned up!')
+        logger.info('Cleaned up!')
 
     atexit.register(cleanup)
 
-    # Wait for the file list and raw data to disappear
     remaining_sec = RIP_TOTAL_WAIT_SECS
     last_tiffs = {}
+
+    logger.info("Starting to rip tiff files...")
+
     while remaining_sec >= 0:
         logging.info('Watching for ripper to finish for %d more seconds', remaining_sec)
         remaining_sec -= RIP_POLL_SECS

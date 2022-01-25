@@ -1,12 +1,5 @@
 #!/bin/bash
 
-
-       # --env=USE_XVFB=yes \
-       # --env=XVFB_SCREEN=0 \
-       # --env=XVFB_SERVER=:9 \
-       # --env=DISPLAY=:9 \
-       # --env=XVFB_RESOLUTION=320x240x8 \
-
 # Determine the day's date that the ripper is being run
 d=$(date "+%Y%m%d")
 
