@@ -20,7 +20,7 @@ RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 
 RIPPER_NAME = Path("Image-BlockRippingUtility.exe")
 RIPPER_DIRECTORY = Path("/apps/prairie_view/")
-SCRATCH_DIRECTORY = Path("/tmp/")
+SCRATCH_DIRECTORY = Path("/temp/")
 DATA_DIRECTORY = Path("/data/")
 
 
@@ -38,7 +38,7 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     dat = str(data_dir)
 
-    logging.info("Path available %s" % dat)
+    logger.info("Path available %s" % dat)
 
     def get_filelists():
         return list(sorted((data_dir).glob('*Filelist.txt')))
@@ -63,6 +63,8 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     logger.info('Ripping from:\n %s\n %s', '\n '.join([str(f) for f in filelists]),
                 '\n '.join([str(f) for f in rawdata]))
+
+    logger.info("Ripping to: %s" % tmp_tiff_dir)
 
     system = platform.system()
     if system == 'Linux':
@@ -98,33 +100,37 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     # TODO: Ripping .csv and ripping tiffs should be their own functions inside this script
 
-    behavior_glob = tmp_tiff_dir.glob("*.csv")
+    # It takes a few seconds for the ripper to get started and create the csv file
+    # Sleep the program for 5 seconds and then get the csvfile
+    time.sleep(5)
 
-    behavior_csv = behavior_glob[0]
+    behavior_glob = tmp_tiff_dir.glob("*")
 
-    logger.info("Found .csv file for behavior: ", behavior_csv)
+    behavior_csv = [file for file in behavior_glob][0]
+
+    logger.info("Found .csv file for behavior: %s" % behavior_csv)
 
     ripping_csv = True
 
     behavior_csv_size = os.stat(behavior_csv).st_size
 
-    logger.info("Voltage Recording .csv size: ", behavior_csv_size)
+    logger.info("Voltage Recording .csv size: %s" % behavior_csv_size)
 
     while ripping_csv:
 
+        time.sleep(RIP_POLL_SECS)
+
         new_behavior_csv_size = os.stat(behavior_csv).st_size
+
+        logger.info("Voltage Recording .csv size: %s" % new_behavior_csv_size)
 
         diff_csv_size = (behavior_csv_size != new_behavior_csv_size)
 
-        if not diff_csv_size:
+        if diff_csv_size:
 
             behavior_csv_size = new_behavior_csv_size
 
             logger.info("Still ripping voltage recording...")
-
-            logger.info("Voltage Recording .csv size: ", behavior_csv_size)
-
-            time.sleep(RIP_POLL_SECS)
         
         else:
 
@@ -158,15 +164,10 @@ def raw_to_tiff(raw_dir, ripper_version):
         remaining_sec -= RIP_POLL_SECS
         time.sleep(RIP_POLL_SECS)
 
-        filelists = get_filelists()
-        rawdata = get_rawdata()
-
         tiffs = get_tiffs()
         tiffs_changed = (last_tiffs != tiffs)
         last_tiffs = tiffs
 
-        logging.info('  Found filelist files: %s', filelists or None)
-        logging.info('  Found rawdata files: %s', rawdata or None)
         logging.info('  Found this many tiff files: %s', len(tiffs))
 
         if not tiffs_changed:

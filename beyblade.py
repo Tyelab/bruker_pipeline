@@ -126,6 +126,7 @@ if __name__ == "__main__":
 
         ripper, num_channels = parse_env_file(directory)
         num_images = determine_num_images(directory, num_channels)
+        recording_date = directory.parents[0].name
 
         try:
             plane_number = re.search("plane\d", directory.name).group()
@@ -134,7 +135,7 @@ if __name__ == "__main__":
             
             plane_number = "0"
 
-        container_name = "-".join([directory.parents[1].name, plane_number, "SNLKT-ripper"])
+        container_name = "-".join([directory.parents[1].name, plane_number, recording_date, "SNLKT-ripper"])
 
         cmd = ["docker/build_container.sh %s %s %s %s %s" % (container_name, str(directory.parent), directory.name, ripper.parent.name, num_images)]
 

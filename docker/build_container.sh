@@ -25,7 +25,7 @@ echo $5 >> logs/$log_filename
 sudo docker run \
        --rm \
        --volume=$2:/data \
-       --volume=/scratch:/tmp \
+       --volume=/scratch/snlkt2p:/temp \
        --volume=/snlkt/data/bruker_pipeline/logs:/logs \
        --env=USER_NAME=${USER} \
        --env=USER_UID=$(id -u ${USER}) \
