@@ -1,3 +1,10 @@
+# Jeremy Delahanty January 2022
+# Main library written by Chris Roat, Stanford University Deisseroth Lab August 2021
+# https://github.com/chrisroat
+# https://github.com/deisseroth-lab/two-photon/
+# Adapted for the Tye Lab by Jeremy Delahanty @ Salk Institute for Dr. Kay Tye's Lab
+# Added functionality with polling file system for csv files as they're written
+
 """Library for running Bruker image ripping utility."""
 
 import argparse
@@ -18,38 +25,77 @@ RIP_TOTAL_WAIT_SECS = 3600  # Total time to wait for ripping before killing it.
 RIP_EXTRA_WAIT_SECS = 10  # Extra time to wait after ripping is detected to be done.
 RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 
+# Name of the ripping utility, spaces are removed because Python interprets a space
+# in the string as the end of a given command.
 RIPPER_NAME = Path("Image-BlockRippingUtility.exe")
+
+# Inside the container, there's a specified directory where all Prairie View Ripping
+# versions are held. The directory is called /apps/prairie_view/version#
 RIPPER_DIRECTORY = Path("/apps/prairie_view/")
+
+# The local scratch directory, called /scratch, is named as /temp/ in the container
+# This is where the ripper will be writing data to.
 SCRATCH_DIRECTORY = Path("/temp/")
+
+# The data directory is where the raw data is located that needs conversion
+# In the docker container, the specific directory being converted is mounted
+# as /data/
 DATA_DIRECTORY = Path("/data/")
 
 
 class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
 
-def raw_to_tiff(raw_dir, ripper_version):
-    """Convert Bruker RAW files to TIFF files using ripping utility specified with `ripper`."""
 
+def raw_to_tiff(raw_dir: Path, ripper_version: str):
+    """Convert Bruker RAW files to TIFF/.csv files using ripping utility specified with `ripper`.
+    
+    From the specified data directory, grabs the raw file lists, raw/unconverted data,
+    and checks to ensure that no tiffs currently reside in output directory. Executes
+    a subprocess that starts the ripper. The lab's naming convention has the Voltage Recording
+    converted first, so the output directory is polled for size of the .csv being built. When
+    between polls the file size has remained the same, the voltage conversion is detected as being
+    completed. It will immediately begin converting the imaging data into tiffs and poll the file
+    system for the number of tiffs in the output directory. Once the number of tiffs is the same
+    between polls, the conversion is detected as complete and the process is killed. Once the 
+    subprocess is killed, the container will be destroyed.
+
+    Args:
+        raw_dir:
+            Path to raw data that needs converting.
+        ripper_version:
+            Version of ripper to use, as in major.minor.64.minor (ie 5.6.64.200)
+    
+    """
+
+    # Generate full path and name for the ripper being used
     ripper = RIPPER_DIRECTORY / ripper_version / RIPPER_NAME
 
+    # Generate full data directory for the raw data
     data_dir = DATA_DIRECTORY / raw_dir
 
+    # Generate temporary directory on the scratch space on the machine
     tmp_tiff_dir = SCRATCH_DIRECTORY / raw_dir
 
+    # Dat used for logger to state which path is being read from
     dat = str(data_dir)
 
     logger.info("Path available %s" % dat)
 
+    # Get file lists
     def get_filelists():
         return list(sorted((data_dir).glob('*Filelist.txt')))
 
+    # Get the raw data files
     def get_rawdata():
         return list(sorted((data_dir).glob('*RAWDATA*')))
 
+    # Get the number of tiffs in the output directory
     def get_tiffs():
         return set((tmp_tiff_dir).glob('*.ome.tif'))
 
     filelists = get_filelists()
+
     if not filelists:
         raise RippingError('No *Filelist.txt files present in data directory')
 
@@ -57,6 +103,7 @@ def raw_to_tiff(raw_dir, ripper_version):
     if not rawdata:
         raise RippingError('No RAWDATA files present in %s' % raw_dir)
 
+    # The output directory should not have any tiffs present. If so, raise an exception and exit.
     tiffs = get_tiffs()
     if tiffs:
         raise RippingError('Cannot rip because tiffs already exist in %s (%d found)' % (raw_dir, len(tiffs)))
@@ -66,6 +113,7 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     logger.info("Ripping to: %s" % tmp_tiff_dir)
 
+    # If using the ripper on a Linux system, run Wine for converting Windows calls to Unix calls on the fly
     system = platform.system()
     if system == 'Linux':
         cmd = ['wine']
@@ -74,6 +122,17 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     # Normally, the fname is passed to -AddRawFile.  But there is a bug in the software, so
     # we have to pop up one level and use -AddRawFileWithSubFolders.
+    # The order of the commands in this list will tell the subprocess to:
+    # 1. Execute the ripper
+    # 2. Keep the raw data
+    # 3. Do not rip to the input directory, instead rip to a different place
+    # 4. Include the subfolder
+    # 5. Add raw file with subfolders, as per bug above
+    # 6. Provide the raw file directory as a string, it must be a string for it to work
+    # 7. Set output directory
+    # 8. Provide the output directory as a string, it must be a string for it to work
+    # 9. Convert, which will tell the ripper to actually start the conversion process.
+
     cmd += [
         ripper,
         "-KeepRaw",
@@ -106,32 +165,44 @@ def raw_to_tiff(raw_dir, ripper_version):
 
     behavior_glob = tmp_tiff_dir.glob("*")
 
+    # There are no other ways to generate a .csv in this process, so the only .csv
+    # that's available is the correct one to poll
     behavior_csv = [file for file in behavior_glob][0]
 
     logger.info("Found .csv file for behavior: %s" % behavior_csv)
 
+    # Create a flag for ripping the csv file, used in the while loop next
     ripping_csv = True
 
+    # Get the size of the csv file
     behavior_csv_size = os.stat(behavior_csv).st_size
 
     logger.info("Voltage Recording .csv size: %s" % behavior_csv_size)
 
+    # While the converter is ripping the .csv file
     while ripping_csv:
 
+        # Wait the RIP_POLL_SECS delay before moving foward with the check
         time.sleep(RIP_POLL_SECS)
 
+        # Get the latest csv file size
         new_behavior_csv_size = os.stat(behavior_csv).st_size
 
         logger.info("Voltage Recording .csv size: %s" % new_behavior_csv_size)
 
+        # Check if the current size is the same as the previous size
         diff_csv_size = (behavior_csv_size != new_behavior_csv_size)
 
+        # If the sizes are different
         if diff_csv_size:
 
+            # The most recent size is assigned as the previous size
             behavior_csv_size = new_behavior_csv_size
 
             logger.info("Still ripping voltage recording...")
         
+        # If the sizes are different, the ripper is done with the .csv
+        # Exit the loop by setting ripping_csv to false
         else:
 
             ripping_csv = False

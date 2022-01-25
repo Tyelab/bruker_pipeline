@@ -4,8 +4,6 @@ import lxml.etree
 import subprocess
 import re
 
-from matplotlib import container
-
 RIPPER_DIRECTORY = Path("/snlkt/data/bruker_pipeline/docker/prairie_view/")
 TRANSFER_DIRECTORY = Path("/snlkt/data/bruker_pipeline/docker")
 

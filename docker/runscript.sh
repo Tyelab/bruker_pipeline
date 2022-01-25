@@ -8,6 +8,7 @@ set -e
 # USE_XVFB means xvfb is already running.  If it is unset, xvfb-run should wrap commands.
 [[ -z "${USE_XVFB}" ]] && CMDPREFIX=xvfb-run
 
+# Unsure why exporting the temporary directory with .wine is necessary...
 TEMPDIR="$(mktemp -d)"
 export WINEPREFIX="${TEMPDIR}/.wine"
 export WINEARCH="win64"
