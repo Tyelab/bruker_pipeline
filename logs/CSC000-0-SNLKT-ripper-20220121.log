@@ -1,0 +1,79 @@
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+2022-01-21 15:36:10.944 rip:165 INFO Container Started for resonant_only_750_ch1-036
+2022-01-21 15:36:10.945 rip:41 INFO Path available /data/resonant_only_750_ch1-036
+2022-01-21 15:36:10.947 rip:64 INFO Ripping from:
+ /data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt
+ /data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004
+2022-01-21 15:36:10.952 rip:92 INFO Ripping has started!
+2022-01-21 15:36:10.952 rip:114 INFO Watching for ripper to finish for 3600 more seconds
+2022-01-21 15:36:20.967 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:36:20.969 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:36:20.969 rip:127 INFO   Found this many tiff files: 0
+2022-01-21 15:36:20.969 rip:114 INFO Watching for ripper to finish for 3590 more seconds
+2022-01-21 15:36:30.981 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:36:30.982 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:36:30.982 rip:127 INFO   Found this many tiff files: 0
+2022-01-21 15:36:30.982 rip:130 INFO Detected ripping is complete
+2022-01-21 15:36:40.989 rip:132 INFO Killing ripper
+2022-01-21 15:36:40.990 rip:134 INFO Ripper has been killed
+2022-01-21 15:36:40.991 rip:106 INFO cleaned up!
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+CSC000-0-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC000/20220118
+resonant_only_750_ch1-036
+5.6.64.100
+1000
+2022-01-21 15:54:29.700 rip:165 INFO Container Started for resonant_only_750_ch1-036
+2022-01-21 15:54:29.700 rip:41 INFO Path available /data/resonant_only_750_ch1-036
+2022-01-21 15:54:29.702 rip:64 INFO Ripping from:
+ /data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt
+ /data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004
+2022-01-21 15:54:29.719 rip:92 INFO Ripping has started!
+2022-01-21 15:54:29.719 rip:114 INFO Watching for ripper to finish for 3600 more seconds
+2022-01-21 15:54:39.738 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:54:39.740 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:54:39.740 rip:127 INFO   Found this many tiff files: 416
+2022-01-21 15:54:39.740 rip:114 INFO Watching for ripper to finish for 3590 more seconds
+2022-01-21 15:54:49.758 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:54:49.759 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:54:49.759 rip:127 INFO   Found this many tiff files: 902
+2022-01-21 15:54:49.759 rip:114 INFO Watching for ripper to finish for 3580 more seconds
+2022-01-21 15:54:59.781 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:54:59.782 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:54:59.782 rip:127 INFO   Found this many tiff files: 1000
+2022-01-21 15:54:59.782 rip:114 INFO Watching for ripper to finish for 3570 more seconds
+2022-01-21 15:55:09.803 rip:125 INFO   Found filelist files: [PosixPath('/data/resonant_only_750_ch1-036/Cycle00001_Filelist.txt')]
+2022-01-21 15:55:09.803 rip:126 INFO   Found rawdata files: [PosixPath('/data/resonant_only_750_ch1-036/CYCLE_000001_RAWDATA_000004')]
+2022-01-21 15:55:09.803 rip:127 INFO   Found this many tiff files: 1000
+2022-01-21 15:55:09.804 rip:130 INFO Detected ripping is complete
+2022-01-21 15:55:19.814 rip:132 INFO Killing ripper
+2022-01-21 15:55:19.815 rip:134 INFO Ripper has been killed
+2022-01-21 15:55:20.817 rip:106 INFO cleaned up!

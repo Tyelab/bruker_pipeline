@@ -1,0 +1,514 @@
+CSE012-plane1-20211112-SNLKT-ripper
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211112
+20211112_CSE012_plane1_-317.025_raw-033
+5.5.64.500
+46293
+2022-01-24 19:31:31.719 rip:209 INFO Container Started for 20211112_CSE012_plane1_-317.025_raw-033
+2022-01-24 19:31:31.719 rip:41 INFO Path available /data/20211112_CSE012_plane1_-317.025_raw-033
+2022-01-24 19:31:31.723 rip:64 INFO Ripping from:
+ /data/20211112_CSE012_plane1_-317.025_raw-033/20211112_CSE012_plane1_-317.025_raw-033_Cycle00001_VoltageRecording_001_VRFilelist.txt
+ /data/20211112_CSE012_plane1_-317.025_raw-033/Cycle00001_Filelist.txt
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002011
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002012
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002013
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002014
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002015
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002016
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002017
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002018
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002019
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002020
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002021
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002022
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002023
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002024
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002025
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002026
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002027
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002028
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002029
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002030
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002031
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002032
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002033
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002034
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002035
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002036
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002037
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002038
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002039
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002040
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002041
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002042
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002043
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002044
+ /data/20211112_CSE012_plane1_-317.025_raw-033/CYCLE_000001_RAWDATA_002045
+2022-01-24 19:31:31.723 rip:67 INFO Ripping to: /temp/20211112_CSE012_plane1_-317.025_raw-033
+2022-01-24 19:31:31.731 rip:94 INFO Ripping has started!
+2022-01-24 19:31:36.737 rip:111 INFO Found .csv file for behavior: /temp/20211112_CSE012_plane1_-317.025_raw-033/20211112_CSE012_plane1_-317.025_raw-033_Cycle00001_VoltageRecording_001.csv
+2022-01-24 19:31:36.740 rip:117 INFO Voltage Recording .csv size: 20480036
+2022-01-24 19:31:46.750 rip:125 INFO Voltage Recording .csv size: 106334289
+2022-01-24 19:31:46.751 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:31:56.762 rip:125 INFO Voltage Recording .csv size: 194748495
+2022-01-24 19:31:56.763 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:06.773 rip:125 INFO Voltage Recording .csv size: 284148929
+2022-01-24 19:32:06.775 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:16.785 rip:125 INFO Voltage Recording .csv size: 374565820
+2022-01-24 19:32:16.787 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:26.797 rip:125 INFO Voltage Recording .csv size: 462760216
+2022-01-24 19:32:26.799 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:36.810 rip:125 INFO Voltage Recording .csv size: 555944882
+2022-01-24 19:32:36.810 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:46.821 rip:125 INFO Voltage Recording .csv size: 645886893
+2022-01-24 19:32:46.822 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:32:56.832 rip:125 INFO Voltage Recording .csv size: 734139086
+2022-01-24 19:32:56.834 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:06.844 rip:125 INFO Voltage Recording .csv size: 826146243
+2022-01-24 19:33:06.845 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:16.855 rip:125 INFO Voltage Recording .csv size: 912944228
+2022-01-24 19:33:16.856 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:26.866 rip:125 INFO Voltage Recording .csv size: 998354125
+2022-01-24 19:33:26.867 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:36.877 rip:125 INFO Voltage Recording .csv size: 1082789538
+2022-01-24 19:33:36.879 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:46.889 rip:125 INFO Voltage Recording .csv size: 1168381934
+2022-01-24 19:33:46.890 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:33:56.900 rip:125 INFO Voltage Recording .csv size: 1258917405
+2022-01-24 19:33:56.901 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:06.911 rip:125 INFO Voltage Recording .csv size: 1348502102
+2022-01-24 19:34:06.912 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:16.922 rip:125 INFO Voltage Recording .csv size: 1428792408
+2022-01-24 19:34:16.925 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:26.935 rip:125 INFO Voltage Recording .csv size: 1512077746
+2022-01-24 19:34:26.936 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:36.946 rip:125 INFO Voltage Recording .csv size: 1600088815
+2022-01-24 19:34:36.947 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:46.957 rip:125 INFO Voltage Recording .csv size: 1689252167
+2022-01-24 19:34:46.959 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:34:56.969 rip:125 INFO Voltage Recording .csv size: 1774949827
+2022-01-24 19:34:56.971 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:35:06.974 rip:125 INFO Voltage Recording .csv size: 1857353020
+2022-01-24 19:35:06.977 rip:133 INFO Still ripping voltage recording...
+2022-01-24 19:35:16.984 rip:125 INFO Voltage Recording .csv size: 1857353020
+2022-01-24 19:35:16.986 rip:139 INFO Voltage .csv Ripping Complete!
+2022-01-24 19:35:16.986 rip:160 INFO Starting to rip tiff files...
+2022-01-24 19:35:16.986 rip:163 INFO Watching for ripper to finish for 3600 more seconds
+2022-01-24 19:35:27.003 rip:171 INFO   Found this many tiff files: 650
+2022-01-24 19:35:27.016 rip:163 INFO Watching for ripper to finish for 3590 more seconds
+2022-01-24 19:35:37.036 rip:171 INFO   Found this many tiff files: 969
+2022-01-24 19:35:37.038 rip:163 INFO Watching for ripper to finish for 3580 more seconds
+2022-01-24 19:35:47.059 rip:171 INFO   Found this many tiff files: 1244
+2022-01-24 19:35:47.061 rip:163 INFO Watching for ripper to finish for 3570 more seconds
+2022-01-24 19:35:57.086 rip:171 INFO   Found this many tiff files: 1445
+2022-01-24 19:35:57.087 rip:163 INFO Watching for ripper to finish for 3560 more seconds
+2022-01-24 19:36:07.105 rip:171 INFO   Found this many tiff files: 1613
+2022-01-24 19:36:07.107 rip:163 INFO Watching for ripper to finish for 3550 more seconds
+2022-01-24 19:36:17.128 rip:171 INFO   Found this many tiff files: 1842
+2022-01-24 19:36:17.130 rip:163 INFO Watching for ripper to finish for 3540 more seconds
+2022-01-24 19:36:27.162 rip:171 INFO   Found this many tiff files: 2103
+2022-01-24 19:36:27.169 rip:163 INFO Watching for ripper to finish for 3530 more seconds
+2022-01-24 19:36:37.203 rip:171 INFO   Found this many tiff files: 2353
+2022-01-24 19:36:37.204 rip:163 INFO Watching for ripper to finish for 3520 more seconds
+2022-01-24 19:36:47.232 rip:171 INFO   Found this many tiff files: 2597
+2022-01-24 19:36:47.244 rip:163 INFO Watching for ripper to finish for 3510 more seconds
+2022-01-24 19:36:57.276 rip:171 INFO   Found this many tiff files: 2856
+2022-01-24 19:36:57.278 rip:163 INFO Watching for ripper to finish for 3500 more seconds
+2022-01-24 19:37:07.319 rip:171 INFO   Found this many tiff files: 3109
+2022-01-24 19:37:07.324 rip:163 INFO Watching for ripper to finish for 3490 more seconds
+2022-01-24 19:37:17.372 rip:171 INFO   Found this many tiff files: 3385
+2022-01-24 19:37:17.384 rip:163 INFO Watching for ripper to finish for 3480 more seconds
+2022-01-24 19:37:27.431 rip:171 INFO   Found this many tiff files: 3701
+2022-01-24 19:37:27.445 rip:163 INFO Watching for ripper to finish for 3470 more seconds
+2022-01-24 19:37:37.495 rip:171 INFO   Found this many tiff files: 3963
+2022-01-24 19:37:37.496 rip:163 INFO Watching for ripper to finish for 3460 more seconds
+2022-01-24 19:37:47.547 rip:171 INFO   Found this many tiff files: 4272
+2022-01-24 19:37:47.570 rip:163 INFO Watching for ripper to finish for 3450 more seconds
+2022-01-24 19:37:57.632 rip:171 INFO   Found this many tiff files: 4562
+2022-01-24 19:37:57.634 rip:163 INFO Watching for ripper to finish for 3440 more seconds
+2022-01-24 19:38:07.689 rip:171 INFO   Found this many tiff files: 4826
+2022-01-24 19:38:07.713 rip:163 INFO Watching for ripper to finish for 3430 more seconds
+2022-01-24 19:38:17.761 rip:171 INFO   Found this many tiff files: 5084
+2022-01-24 19:38:17.790 rip:163 INFO Watching for ripper to finish for 3420 more seconds
+2022-01-24 19:38:27.851 rip:171 INFO   Found this many tiff files: 5311
+2022-01-24 19:38:27.857 rip:163 INFO Watching for ripper to finish for 3410 more seconds
+2022-01-24 19:38:37.927 rip:171 INFO   Found this many tiff files: 5580
+2022-01-24 19:38:37.930 rip:163 INFO Watching for ripper to finish for 3400 more seconds
+2022-01-24 19:38:47.992 rip:171 INFO   Found this many tiff files: 5839
+2022-01-24 19:38:47.994 rip:163 INFO Watching for ripper to finish for 3390 more seconds
+2022-01-24 19:38:58.060 rip:171 INFO   Found this many tiff files: 6099
+2022-01-24 19:38:58.072 rip:163 INFO Watching for ripper to finish for 3380 more seconds
+2022-01-24 19:39:08.142 rip:171 INFO   Found this many tiff files: 6372
+2022-01-24 19:39:08.155 rip:163 INFO Watching for ripper to finish for 3370 more seconds
+2022-01-24 19:39:18.228 rip:171 INFO   Found this many tiff files: 6664
+2022-01-24 19:39:18.228 rip:163 INFO Watching for ripper to finish for 3360 more seconds
+2022-01-24 19:39:28.306 rip:171 INFO   Found this many tiff files: 6931
+2022-01-24 19:39:28.307 rip:163 INFO Watching for ripper to finish for 3350 more seconds
+2022-01-24 19:39:38.381 rip:171 INFO   Found this many tiff files: 7177
+2022-01-24 19:39:38.391 rip:163 INFO Watching for ripper to finish for 3340 more seconds
+2022-01-24 19:39:48.474 rip:171 INFO   Found this many tiff files: 7400
+2022-01-24 19:39:48.503 rip:163 INFO Watching for ripper to finish for 3330 more seconds
+2022-01-24 19:39:58.579 rip:171 INFO   Found this many tiff files: 7675
+2022-01-24 19:39:58.607 rip:163 INFO Watching for ripper to finish for 3320 more seconds
+2022-01-24 19:40:08.687 rip:171 INFO   Found this many tiff files: 7918
+2022-01-24 19:40:08.703 rip:163 INFO Watching for ripper to finish for 3310 more seconds
+2022-01-24 19:40:18.763 rip:171 INFO   Found this many tiff files: 8153
+2022-01-24 19:40:18.770 rip:163 INFO Watching for ripper to finish for 3300 more seconds
+2022-01-24 19:40:28.856 rip:171 INFO   Found this many tiff files: 8431
+2022-01-24 19:40:28.863 rip:163 INFO Watching for ripper to finish for 3290 more seconds
+2022-01-24 19:40:38.947 rip:171 INFO   Found this many tiff files: 8696
+2022-01-24 19:40:38.948 rip:163 INFO Watching for ripper to finish for 3280 more seconds
+2022-01-24 19:40:49.033 rip:171 INFO   Found this many tiff files: 8926
+2022-01-24 19:40:49.040 rip:163 INFO Watching for ripper to finish for 3270 more seconds
+2022-01-24 19:40:59.112 rip:171 INFO   Found this many tiff files: 9162
+2022-01-24 19:40:59.154 rip:163 INFO Watching for ripper to finish for 3260 more seconds
+2022-01-24 19:41:09.252 rip:171 INFO   Found this many tiff files: 9415
+2022-01-24 19:41:09.253 rip:163 INFO Watching for ripper to finish for 3250 more seconds
+2022-01-24 19:41:19.364 rip:171 INFO   Found this many tiff files: 9669
+2022-01-24 19:41:19.366 rip:163 INFO Watching for ripper to finish for 3240 more seconds
+2022-01-24 19:41:29.458 rip:171 INFO   Found this many tiff files: 9957
+2022-01-24 19:41:29.462 rip:163 INFO Watching for ripper to finish for 3230 more seconds
+2022-01-24 19:41:39.959 rip:171 INFO   Found this many tiff files: 10235
+2022-01-24 19:41:39.961 rip:163 INFO Watching for ripper to finish for 3220 more seconds
+2022-01-24 19:41:50.059 rip:171 INFO   Found this many tiff files: 10504
+2022-01-24 19:41:50.064 rip:163 INFO Watching for ripper to finish for 3210 more seconds
+2022-01-24 19:42:00.166 rip:171 INFO   Found this many tiff files: 10759
+2022-01-24 19:42:00.170 rip:163 INFO Watching for ripper to finish for 3200 more seconds
+2022-01-24 19:42:10.278 rip:171 INFO   Found this many tiff files: 11028
+2022-01-24 19:42:10.279 rip:163 INFO Watching for ripper to finish for 3190 more seconds
+2022-01-24 19:42:20.385 rip:171 INFO   Found this many tiff files: 11303
+2022-01-24 19:42:20.389 rip:163 INFO Watching for ripper to finish for 3180 more seconds
+2022-01-24 19:42:30.496 rip:171 INFO   Found this many tiff files: 11546
+2022-01-24 19:42:30.508 rip:163 INFO Watching for ripper to finish for 3170 more seconds
+2022-01-24 19:42:40.615 rip:171 INFO   Found this many tiff files: 11815
+2022-01-24 19:42:40.620 rip:163 INFO Watching for ripper to finish for 3160 more seconds
+2022-01-24 19:42:50.735 rip:171 INFO   Found this many tiff files: 12045
+2022-01-24 19:42:50.896 rip:163 INFO Watching for ripper to finish for 3150 more seconds
+2022-01-24 19:43:01.003 rip:171 INFO   Found this many tiff files: 12305
+2022-01-24 19:43:01.004 rip:163 INFO Watching for ripper to finish for 3140 more seconds
+2022-01-24 19:43:11.112 rip:171 INFO   Found this many tiff files: 12553
+2022-01-24 19:43:11.113 rip:163 INFO Watching for ripper to finish for 3130 more seconds
+2022-01-24 19:43:21.225 rip:171 INFO   Found this many tiff files: 12808
+2022-01-24 19:43:21.231 rip:163 INFO Watching for ripper to finish for 3120 more seconds
+2022-01-24 19:43:31.345 rip:171 INFO   Found this many tiff files: 13050
+2022-01-24 19:43:31.347 rip:163 INFO Watching for ripper to finish for 3110 more seconds
+2022-01-24 19:43:41.458 rip:171 INFO   Found this many tiff files: 13315
+2022-01-24 19:43:41.459 rip:163 INFO Watching for ripper to finish for 3100 more seconds
+2022-01-24 19:43:51.578 rip:171 INFO   Found this many tiff files: 13539
+2022-01-24 19:43:51.591 rip:163 INFO Watching for ripper to finish for 3090 more seconds
+2022-01-24 19:44:01.722 rip:171 INFO   Found this many tiff files: 13758
+2022-01-24 19:44:01.723 rip:163 INFO Watching for ripper to finish for 3080 more seconds
+2022-01-24 19:44:11.845 rip:171 INFO   Found this many tiff files: 14017
+2022-01-24 19:44:11.847 rip:163 INFO Watching for ripper to finish for 3070 more seconds
+2022-01-24 19:44:21.962 rip:171 INFO   Found this many tiff files: 14212
+2022-01-24 19:44:21.964 rip:163 INFO Watching for ripper to finish for 3060 more seconds
+2022-01-24 19:44:32.096 rip:171 INFO   Found this many tiff files: 14446
+2022-01-24 19:44:32.107 rip:163 INFO Watching for ripper to finish for 3050 more seconds
+2022-01-24 19:44:42.229 rip:171 INFO   Found this many tiff files: 14654
+2022-01-24 19:44:42.233 rip:163 INFO Watching for ripper to finish for 3040 more seconds
+2022-01-24 19:44:52.370 rip:171 INFO   Found this many tiff files: 14899
+2022-01-24 19:44:52.371 rip:163 INFO Watching for ripper to finish for 3030 more seconds
+2022-01-24 19:45:02.500 rip:171 INFO   Found this many tiff files: 15102
+2022-01-24 19:45:02.510 rip:163 INFO Watching for ripper to finish for 3020 more seconds
+2022-01-24 19:45:12.670 rip:171 INFO   Found this many tiff files: 15341
+2022-01-24 19:45:12.675 rip:163 INFO Watching for ripper to finish for 3010 more seconds
+2022-01-24 19:45:22.808 rip:171 INFO   Found this many tiff files: 15591
+2022-01-24 19:45:22.810 rip:163 INFO Watching for ripper to finish for 3000 more seconds
+2022-01-24 19:45:32.941 rip:171 INFO   Found this many tiff files: 15828
+2022-01-24 19:45:32.947 rip:163 INFO Watching for ripper to finish for 2990 more seconds
+2022-01-24 19:45:43.088 rip:171 INFO   Found this many tiff files: 16073
+2022-01-24 19:45:43.094 rip:163 INFO Watching for ripper to finish for 2980 more seconds
+2022-01-24 19:45:53.230 rip:171 INFO   Found this many tiff files: 16330
+2022-01-24 19:45:53.242 rip:163 INFO Watching for ripper to finish for 2970 more seconds
+2022-01-24 19:46:03.381 rip:171 INFO   Found this many tiff files: 16585
+2022-01-24 19:46:03.381 rip:163 INFO Watching for ripper to finish for 2960 more seconds
+2022-01-24 19:46:13.516 rip:171 INFO   Found this many tiff files: 16828
+2022-01-24 19:46:13.519 rip:163 INFO Watching for ripper to finish for 2950 more seconds
+2022-01-24 19:46:23.660 rip:171 INFO   Found this many tiff files: 17070
+2022-01-24 19:46:23.665 rip:163 INFO Watching for ripper to finish for 2940 more seconds
+2022-01-24 19:46:33.816 rip:171 INFO   Found this many tiff files: 17333
+2022-01-24 19:46:33.825 rip:163 INFO Watching for ripper to finish for 2930 more seconds
+2022-01-24 19:46:43.967 rip:171 INFO   Found this many tiff files: 17615
+2022-01-24 19:46:43.968 rip:163 INFO Watching for ripper to finish for 2920 more seconds
+2022-01-24 19:46:54.113 rip:171 INFO   Found this many tiff files: 17864
+2022-01-24 19:46:54.119 rip:163 INFO Watching for ripper to finish for 2910 more seconds
+2022-01-24 19:47:04.301 rip:171 INFO   Found this many tiff files: 18114
+2022-01-24 19:47:04.302 rip:163 INFO Watching for ripper to finish for 2900 more seconds
+2022-01-24 19:47:14.452 rip:171 INFO   Found this many tiff files: 18366
+2022-01-24 19:47:14.457 rip:163 INFO Watching for ripper to finish for 2890 more seconds
+2022-01-24 19:47:24.584 rip:171 INFO   Found this many tiff files: 18621
+2022-01-24 19:47:24.592 rip:163 INFO Watching for ripper to finish for 2880 more seconds
+2022-01-24 19:47:34.744 rip:171 INFO   Found this many tiff files: 18839
+2022-01-24 19:47:34.746 rip:163 INFO Watching for ripper to finish for 2870 more seconds
+2022-01-24 19:47:44.900 rip:171 INFO   Found this many tiff files: 19092
+2022-01-24 19:47:44.905 rip:163 INFO Watching for ripper to finish for 2860 more seconds
+2022-01-24 19:47:55.067 rip:171 INFO   Found this many tiff files: 19318
+2022-01-24 19:47:55.068 rip:163 INFO Watching for ripper to finish for 2850 more seconds
+2022-01-24 19:48:05.225 rip:171 INFO   Found this many tiff files: 19544
+2022-01-24 19:48:05.244 rip:163 INFO Watching for ripper to finish for 2840 more seconds
+2022-01-24 19:48:15.413 rip:171 INFO   Found this many tiff files: 19759
+2022-01-24 19:48:15.423 rip:163 INFO Watching for ripper to finish for 2830 more seconds
+2022-01-24 19:48:25.583 rip:171 INFO   Found this many tiff files: 19993
+2022-01-24 19:48:25.590 rip:163 INFO Watching for ripper to finish for 2820 more seconds
+2022-01-24 19:48:35.752 rip:171 INFO   Found this many tiff files: 20221
+2022-01-24 19:48:35.755 rip:163 INFO Watching for ripper to finish for 2810 more seconds
+2022-01-24 19:48:45.926 rip:171 INFO   Found this many tiff files: 20473
+2022-01-24 19:48:45.941 rip:163 INFO Watching for ripper to finish for 2800 more seconds
+2022-01-24 19:48:56.099 rip:171 INFO   Found this many tiff files: 20718
+2022-01-24 19:48:56.100 rip:163 INFO Watching for ripper to finish for 2790 more seconds
+2022-01-24 19:49:06.267 rip:171 INFO   Found this many tiff files: 20948
+2022-01-24 19:49:06.267 rip:163 INFO Watching for ripper to finish for 2780 more seconds
+2022-01-24 19:49:16.432 rip:171 INFO   Found this many tiff files: 21198
+2022-01-24 19:49:16.449 rip:163 INFO Watching for ripper to finish for 2770 more seconds
+2022-01-24 19:49:26.624 rip:171 INFO   Found this many tiff files: 21447
+2022-01-24 19:49:26.628 rip:163 INFO Watching for ripper to finish for 2760 more seconds
+2022-01-24 19:49:36.802 rip:171 INFO   Found this many tiff files: 21670
+2022-01-24 19:49:36.807 rip:163 INFO Watching for ripper to finish for 2750 more seconds
+2022-01-24 19:49:46.992 rip:171 INFO   Found this many tiff files: 21908
+2022-01-24 19:49:47.001 rip:163 INFO Watching for ripper to finish for 2740 more seconds
+2022-01-24 19:49:57.171 rip:171 INFO   Found this many tiff files: 22134
+2022-01-24 19:49:57.174 rip:163 INFO Watching for ripper to finish for 2730 more seconds
+2022-01-24 19:50:07.359 rip:171 INFO   Found this many tiff files: 22371
+2022-01-24 19:50:07.361 rip:163 INFO Watching for ripper to finish for 2720 more seconds
+2022-01-24 19:50:17.527 rip:171 INFO   Found this many tiff files: 22595
+2022-01-24 19:50:17.536 rip:163 INFO Watching for ripper to finish for 2710 more seconds
+2022-01-24 19:50:27.706 rip:171 INFO   Found this many tiff files: 22824
+2022-01-24 19:50:27.712 rip:163 INFO Watching for ripper to finish for 2700 more seconds
+2022-01-24 19:50:37.885 rip:171 INFO   Found this many tiff files: 23075
+2022-01-24 19:50:37.900 rip:163 INFO Watching for ripper to finish for 2690 more seconds
+2022-01-24 19:50:48.090 rip:171 INFO   Found this many tiff files: 23342
+2022-01-24 19:50:48.103 rip:163 INFO Watching for ripper to finish for 2680 more seconds
+2022-01-24 19:50:58.285 rip:171 INFO   Found this many tiff files: 23584
+2022-01-24 19:50:58.287 rip:163 INFO Watching for ripper to finish for 2670 more seconds
+2022-01-24 19:51:08.525 rip:171 INFO   Found this many tiff files: 23821
+2022-01-24 19:51:08.526 rip:163 INFO Watching for ripper to finish for 2660 more seconds
+2022-01-24 19:51:18.708 rip:171 INFO   Found this many tiff files: 24042
+2022-01-24 19:51:18.711 rip:163 INFO Watching for ripper to finish for 2650 more seconds
+2022-01-24 19:51:28.902 rip:171 INFO   Found this many tiff files: 24268
+2022-01-24 19:51:28.903 rip:163 INFO Watching for ripper to finish for 2640 more seconds
+2022-01-24 19:51:39.082 rip:171 INFO   Found this many tiff files: 24500
+2022-01-24 19:51:39.085 rip:163 INFO Watching for ripper to finish for 2630 more seconds
+2022-01-24 19:51:49.275 rip:171 INFO   Found this many tiff files: 24723
+2022-01-24 19:51:49.277 rip:163 INFO Watching for ripper to finish for 2620 more seconds
+2022-01-24 19:51:59.451 rip:171 INFO   Found this many tiff files: 24958
+2022-01-24 19:51:59.451 rip:163 INFO Watching for ripper to finish for 2610 more seconds
+2022-01-24 19:52:09.654 rip:171 INFO   Found this many tiff files: 25164
+2022-01-24 19:52:09.655 rip:163 INFO Watching for ripper to finish for 2600 more seconds
+2022-01-24 19:52:19.846 rip:171 INFO   Found this many tiff files: 25385
+2022-01-24 19:52:19.849 rip:163 INFO Watching for ripper to finish for 2590 more seconds
+2022-01-24 19:52:30.052 rip:171 INFO   Found this many tiff files: 25617
+2022-01-24 19:52:30.053 rip:163 INFO Watching for ripper to finish for 2580 more seconds
+2022-01-24 19:52:40.243 rip:171 INFO   Found this many tiff files: 25840
+2022-01-24 19:52:40.266 rip:163 INFO Watching for ripper to finish for 2570 more seconds
+2022-01-24 19:52:50.469 rip:171 INFO   Found this many tiff files: 26053
+2022-01-24 19:52:50.471 rip:163 INFO Watching for ripper to finish for 2560 more seconds
+2022-01-24 19:53:00.663 rip:171 INFO   Found this many tiff files: 26259
+2022-01-24 19:53:00.663 rip:163 INFO Watching for ripper to finish for 2550 more seconds
+2022-01-24 19:53:10.867 rip:171 INFO   Found this many tiff files: 26467
+2022-01-24 19:53:10.875 rip:163 INFO Watching for ripper to finish for 2540 more seconds
+2022-01-24 19:53:21.083 rip:171 INFO   Found this many tiff files: 26688
+2022-01-24 19:53:21.084 rip:163 INFO Watching for ripper to finish for 2530 more seconds
+2022-01-24 19:53:31.275 rip:171 INFO   Found this many tiff files: 26902
+2022-01-24 19:53:31.278 rip:163 INFO Watching for ripper to finish for 2520 more seconds
+2022-01-24 19:53:41.480 rip:171 INFO   Found this many tiff files: 27127
+2022-01-24 19:53:41.481 rip:163 INFO Watching for ripper to finish for 2510 more seconds
+2022-01-24 19:53:51.681 rip:171 INFO   Found this many tiff files: 27347
+2022-01-24 19:53:51.681 rip:163 INFO Watching for ripper to finish for 2500 more seconds
+2022-01-24 19:54:01.885 rip:171 INFO   Found this many tiff files: 27591
+2022-01-24 19:54:01.890 rip:163 INFO Watching for ripper to finish for 2490 more seconds
+2022-01-24 19:54:12.130 rip:171 INFO   Found this many tiff files: 27798
+2022-01-24 19:54:12.131 rip:163 INFO Watching for ripper to finish for 2480 more seconds
+2022-01-24 19:54:22.357 rip:171 INFO   Found this many tiff files: 28033
+2022-01-24 19:54:22.360 rip:163 INFO Watching for ripper to finish for 2470 more seconds
+2022-01-24 19:54:32.577 rip:171 INFO   Found this many tiff files: 28235
+2022-01-24 19:54:32.602 rip:163 INFO Watching for ripper to finish for 2460 more seconds
+2022-01-24 19:54:42.801 rip:171 INFO   Found this many tiff files: 28457
+2022-01-24 19:54:42.803 rip:163 INFO Watching for ripper to finish for 2450 more seconds
+2022-01-24 19:54:53.023 rip:171 INFO   Found this many tiff files: 28681
+2022-01-24 19:54:53.026 rip:163 INFO Watching for ripper to finish for 2440 more seconds
+2022-01-24 19:55:03.248 rip:171 INFO   Found this many tiff files: 28905
+2022-01-24 19:55:03.250 rip:163 INFO Watching for ripper to finish for 2430 more seconds
+2022-01-24 19:55:13.454 rip:171 INFO   Found this many tiff files: 29115
+2022-01-24 19:55:13.456 rip:163 INFO Watching for ripper to finish for 2420 more seconds
+2022-01-24 19:55:23.666 rip:171 INFO   Found this many tiff files: 29312
+2022-01-24 19:55:23.671 rip:163 INFO Watching for ripper to finish for 2410 more seconds
+2022-01-24 19:55:33.872 rip:171 INFO   Found this many tiff files: 29525
+2022-01-24 19:55:33.873 rip:163 INFO Watching for ripper to finish for 2400 more seconds
+2022-01-24 19:55:44.133 rip:171 INFO   Found this many tiff files: 29750
+2022-01-24 19:55:44.134 rip:163 INFO Watching for ripper to finish for 2390 more seconds
+2022-01-24 19:55:54.309 rip:171 INFO   Found this many tiff files: 29960
+2022-01-24 19:55:54.317 rip:163 INFO Watching for ripper to finish for 2380 more seconds
+2022-01-24 19:56:04.531 rip:171 INFO   Found this many tiff files: 30153
+2022-01-24 19:56:04.533 rip:163 INFO Watching for ripper to finish for 2370 more seconds
+2022-01-24 19:56:14.759 rip:171 INFO   Found this many tiff files: 30365
+2022-01-24 19:56:14.761 rip:163 INFO Watching for ripper to finish for 2360 more seconds
+2022-01-24 19:56:24.960 rip:171 INFO   Found this many tiff files: 30583
+2022-01-24 19:56:24.964 rip:163 INFO Watching for ripper to finish for 2350 more seconds
+2022-01-24 19:56:35.223 rip:171 INFO   Found this many tiff files: 30780
+2022-01-24 19:56:35.225 rip:163 INFO Watching for ripper to finish for 2340 more seconds
+2022-01-24 19:56:45.446 rip:171 INFO   Found this many tiff files: 30990
+2022-01-24 19:56:45.447 rip:163 INFO Watching for ripper to finish for 2330 more seconds
+2022-01-24 19:56:55.683 rip:171 INFO   Found this many tiff files: 31187
+2022-01-24 19:56:55.684 rip:163 INFO Watching for ripper to finish for 2320 more seconds
+2022-01-24 19:57:05.904 rip:171 INFO   Found this many tiff files: 31378
+2022-01-24 19:57:05.912 rip:163 INFO Watching for ripper to finish for 2310 more seconds
+2022-01-24 19:57:16.136 rip:171 INFO   Found this many tiff files: 31583
+2022-01-24 19:57:16.137 rip:163 INFO Watching for ripper to finish for 2300 more seconds
+2022-01-24 19:57:26.376 rip:171 INFO   Found this many tiff files: 31795
+2022-01-24 19:57:26.377 rip:163 INFO Watching for ripper to finish for 2290 more seconds
+2022-01-24 19:57:36.593 rip:171 INFO   Found this many tiff files: 32005
+2022-01-24 19:57:36.594 rip:163 INFO Watching for ripper to finish for 2280 more seconds
+2022-01-24 19:57:46.992 rip:171 INFO   Found this many tiff files: 32223
+2022-01-24 19:57:46.993 rip:163 INFO Watching for ripper to finish for 2270 more seconds
+2022-01-24 19:57:57.235 rip:171 INFO   Found this many tiff files: 32428
+2022-01-24 19:57:57.260 rip:163 INFO Watching for ripper to finish for 2260 more seconds
+2022-01-24 19:58:07.507 rip:171 INFO   Found this many tiff files: 32626
+2022-01-24 19:58:07.508 rip:163 INFO Watching for ripper to finish for 2250 more seconds
+2022-01-24 19:58:17.778 rip:171 INFO   Found this many tiff files: 32832
+2022-01-24 19:58:17.780 rip:163 INFO Watching for ripper to finish for 2240 more seconds
+2022-01-24 19:58:28.031 rip:171 INFO   Found this many tiff files: 33024
+2022-01-24 19:58:28.032 rip:163 INFO Watching for ripper to finish for 2230 more seconds
+2022-01-24 19:58:38.284 rip:171 INFO   Found this many tiff files: 33207
+2022-01-24 19:58:38.286 rip:163 INFO Watching for ripper to finish for 2220 more seconds
+2022-01-24 19:58:48.507 rip:171 INFO   Found this many tiff files: 33397
+2022-01-24 19:58:48.509 rip:163 INFO Watching for ripper to finish for 2210 more seconds
+2022-01-24 19:58:58.753 rip:171 INFO   Found this many tiff files: 33587
+2022-01-24 19:58:58.755 rip:163 INFO Watching for ripper to finish for 2200 more seconds
+2022-01-24 19:59:08.981 rip:171 INFO   Found this many tiff files: 33790
+2022-01-24 19:59:08.983 rip:163 INFO Watching for ripper to finish for 2190 more seconds
+2022-01-24 19:59:19.259 rip:171 INFO   Found this many tiff files: 33986
+2022-01-24 19:59:19.263 rip:163 INFO Watching for ripper to finish for 2180 more seconds
+2022-01-24 19:59:29.497 rip:171 INFO   Found this many tiff files: 34191
+2022-01-24 19:59:29.499 rip:163 INFO Watching for ripper to finish for 2170 more seconds
+2022-01-24 19:59:39.749 rip:171 INFO   Found this many tiff files: 34375
+2022-01-24 19:59:39.754 rip:163 INFO Watching for ripper to finish for 2160 more seconds
+2022-01-24 19:59:50.019 rip:171 INFO   Found this many tiff files: 34582
+2022-01-24 19:59:50.030 rip:163 INFO Watching for ripper to finish for 2150 more seconds
+2022-01-24 20:00:00.323 rip:171 INFO   Found this many tiff files: 34771
+2022-01-24 20:00:00.324 rip:163 INFO Watching for ripper to finish for 2140 more seconds
+2022-01-24 20:00:10.569 rip:171 INFO   Found this many tiff files: 34967
+2022-01-24 20:00:10.571 rip:163 INFO Watching for ripper to finish for 2130 more seconds
+2022-01-24 20:00:20.827 rip:171 INFO   Found this many tiff files: 35179
+2022-01-24 20:00:20.828 rip:163 INFO Watching for ripper to finish for 2120 more seconds
+2022-01-24 20:00:31.103 rip:171 INFO   Found this many tiff files: 35390
+2022-01-24 20:00:31.109 rip:163 INFO Watching for ripper to finish for 2110 more seconds
+2022-01-24 20:00:41.385 rip:171 INFO   Found this many tiff files: 35588
+2022-01-24 20:00:41.389 rip:163 INFO Watching for ripper to finish for 2100 more seconds
+2022-01-24 20:00:51.633 rip:171 INFO   Found this many tiff files: 35782
+2022-01-24 20:00:51.634 rip:163 INFO Watching for ripper to finish for 2090 more seconds
+2022-01-24 20:01:01.885 rip:171 INFO   Found this many tiff files: 35983
+2022-01-24 20:01:01.887 rip:163 INFO Watching for ripper to finish for 2080 more seconds
+2022-01-24 20:01:12.142 rip:171 INFO   Found this many tiff files: 36167
+2022-01-24 20:01:12.145 rip:163 INFO Watching for ripper to finish for 2070 more seconds
+2022-01-24 20:01:22.399 rip:171 INFO   Found this many tiff files: 36353
+2022-01-24 20:01:22.407 rip:163 INFO Watching for ripper to finish for 2060 more seconds
+2022-01-24 20:01:32.659 rip:171 INFO   Found this many tiff files: 36561
+2022-01-24 20:01:32.660 rip:163 INFO Watching for ripper to finish for 2050 more seconds
+2022-01-24 20:01:42.920 rip:171 INFO   Found this many tiff files: 36748
+2022-01-24 20:01:42.925 rip:163 INFO Watching for ripper to finish for 2040 more seconds
+2022-01-24 20:01:53.196 rip:171 INFO   Found this many tiff files: 36927
+2022-01-24 20:01:53.196 rip:163 INFO Watching for ripper to finish for 2030 more seconds
+2022-01-24 20:02:03.473 rip:171 INFO   Found this many tiff files: 37129
+2022-01-24 20:02:03.474 rip:163 INFO Watching for ripper to finish for 2020 more seconds
+2022-01-24 20:02:13.811 rip:171 INFO   Found this many tiff files: 37322
+2022-01-24 20:02:13.812 rip:163 INFO Watching for ripper to finish for 2010 more seconds
+2022-01-24 20:02:24.053 rip:171 INFO   Found this many tiff files: 37522
+2022-01-24 20:02:24.055 rip:163 INFO Watching for ripper to finish for 2000 more seconds
+2022-01-24 20:02:34.322 rip:171 INFO   Found this many tiff files: 37702
+2022-01-24 20:02:34.323 rip:163 INFO Watching for ripper to finish for 1990 more seconds
+2022-01-24 20:02:44.605 rip:171 INFO   Found this many tiff files: 37906
+2022-01-24 20:02:44.616 rip:163 INFO Watching for ripper to finish for 1980 more seconds
+2022-01-24 20:02:54.912 rip:171 INFO   Found this many tiff files: 38104
+2022-01-24 20:02:54.913 rip:163 INFO Watching for ripper to finish for 1970 more seconds
+2022-01-24 20:03:05.270 rip:171 INFO   Found this many tiff files: 38293
+2022-01-24 20:03:05.272 rip:163 INFO Watching for ripper to finish for 1960 more seconds
+2022-01-24 20:03:15.576 rip:171 INFO   Found this many tiff files: 38500
+2022-01-24 20:03:15.578 rip:163 INFO Watching for ripper to finish for 1950 more seconds
+2022-01-24 20:03:25.811 rip:171 INFO   Found this many tiff files: 38688
+2022-01-24 20:03:25.812 rip:163 INFO Watching for ripper to finish for 1940 more seconds
+2022-01-24 20:03:36.091 rip:171 INFO   Found this many tiff files: 38892
+2022-01-24 20:03:36.092 rip:163 INFO Watching for ripper to finish for 1930 more seconds
+2022-01-24 20:03:46.378 rip:171 INFO   Found this many tiff files: 39085
+2022-01-24 20:03:46.380 rip:163 INFO Watching for ripper to finish for 1920 more seconds
+2022-01-24 20:03:56.662 rip:171 INFO   Found this many tiff files: 39280
+2022-01-24 20:03:56.663 rip:163 INFO Watching for ripper to finish for 1910 more seconds
+2022-01-24 20:04:06.953 rip:171 INFO   Found this many tiff files: 39482
+2022-01-24 20:04:06.955 rip:163 INFO Watching for ripper to finish for 1900 more seconds
+2022-01-24 20:04:17.280 rip:171 INFO   Found this many tiff files: 39664
+2022-01-24 20:04:17.282 rip:163 INFO Watching for ripper to finish for 1890 more seconds
+2022-01-24 20:04:27.543 rip:171 INFO   Found this many tiff files: 39856
+2022-01-24 20:04:27.547 rip:163 INFO Watching for ripper to finish for 1880 more seconds
+2022-01-24 20:04:37.825 rip:171 INFO   Found this many tiff files: 40050
+2022-01-24 20:04:37.835 rip:163 INFO Watching for ripper to finish for 1870 more seconds
+2022-01-24 20:04:48.204 rip:171 INFO   Found this many tiff files: 40241
+2022-01-24 20:04:48.207 rip:163 INFO Watching for ripper to finish for 1860 more seconds
+2022-01-24 20:04:58.502 rip:171 INFO   Found this many tiff files: 40422
+2022-01-24 20:04:58.516 rip:163 INFO Watching for ripper to finish for 1850 more seconds
+2022-01-24 20:05:08.812 rip:171 INFO   Found this many tiff files: 40607
+2022-01-24 20:05:08.815 rip:163 INFO Watching for ripper to finish for 1840 more seconds
+2022-01-24 20:05:19.107 rip:171 INFO   Found this many tiff files: 40785
+2022-01-24 20:05:19.113 rip:163 INFO Watching for ripper to finish for 1830 more seconds
+2022-01-24 20:05:29.427 rip:171 INFO   Found this many tiff files: 40972
+2022-01-24 20:05:29.428 rip:163 INFO Watching for ripper to finish for 1820 more seconds
+2022-01-24 20:05:39.729 rip:171 INFO   Found this many tiff files: 41165
+2022-01-24 20:05:39.731 rip:163 INFO Watching for ripper to finish for 1810 more seconds
+2022-01-24 20:05:50.000 rip:171 INFO   Found this many tiff files: 41345
+2022-01-24 20:05:50.001 rip:163 INFO Watching for ripper to finish for 1800 more seconds
+2022-01-24 20:06:00.291 rip:171 INFO   Found this many tiff files: 41532
+2022-01-24 20:06:00.291 rip:163 INFO Watching for ripper to finish for 1790 more seconds
+2022-01-24 20:06:10.624 rip:171 INFO   Found this many tiff files: 41705
+2022-01-24 20:06:10.636 rip:163 INFO Watching for ripper to finish for 1780 more seconds
+2022-01-24 20:06:20.932 rip:171 INFO   Found this many tiff files: 41881
+2022-01-24 20:06:20.934 rip:163 INFO Watching for ripper to finish for 1770 more seconds
+2022-01-24 20:06:31.235 rip:171 INFO   Found this many tiff files: 42074
+2022-01-24 20:06:31.236 rip:163 INFO Watching for ripper to finish for 1760 more seconds
+2022-01-24 20:06:41.541 rip:171 INFO   Found this many tiff files: 42266
+2022-01-24 20:06:41.542 rip:163 INFO Watching for ripper to finish for 1750 more seconds
+2022-01-24 20:06:51.853 rip:171 INFO   Found this many tiff files: 42450
+2022-01-24 20:06:51.857 rip:163 INFO Watching for ripper to finish for 1740 more seconds
+2022-01-24 20:07:02.163 rip:171 INFO   Found this many tiff files: 42630
+2022-01-24 20:07:02.164 rip:163 INFO Watching for ripper to finish for 1730 more seconds
+2022-01-24 20:07:12.459 rip:171 INFO   Found this many tiff files: 42808
+2022-01-24 20:07:12.471 rip:163 INFO Watching for ripper to finish for 1720 more seconds
+2022-01-24 20:07:22.786 rip:171 INFO   Found this many tiff files: 42983
+2022-01-24 20:07:22.802 rip:163 INFO Watching for ripper to finish for 1710 more seconds
+2022-01-24 20:07:33.118 rip:171 INFO   Found this many tiff files: 43172
+2022-01-24 20:07:33.118 rip:163 INFO Watching for ripper to finish for 1700 more seconds
+2022-01-24 20:07:43.408 rip:171 INFO   Found this many tiff files: 43349
+2022-01-24 20:07:43.409 rip:163 INFO Watching for ripper to finish for 1690 more seconds
+2022-01-24 20:07:53.707 rip:171 INFO   Found this many tiff files: 43534
+2022-01-24 20:07:53.709 rip:163 INFO Watching for ripper to finish for 1680 more seconds
+2022-01-24 20:08:04.003 rip:171 INFO   Found this many tiff files: 43718
+2022-01-24 20:08:04.006 rip:163 INFO Watching for ripper to finish for 1670 more seconds
+2022-01-24 20:08:14.310 rip:171 INFO   Found this many tiff files: 43900
+2022-01-24 20:08:14.310 rip:163 INFO Watching for ripper to finish for 1660 more seconds
+2022-01-24 20:08:24.615 rip:171 INFO   Found this many tiff files: 44066
+2022-01-24 20:08:24.616 rip:163 INFO Watching for ripper to finish for 1650 more seconds
+2022-01-24 20:08:34.905 rip:171 INFO   Found this many tiff files: 44233
+2022-01-24 20:08:34.907 rip:163 INFO Watching for ripper to finish for 1640 more seconds
+2022-01-24 20:08:45.222 rip:171 INFO   Found this many tiff files: 44416
+2022-01-24 20:08:45.223 rip:163 INFO Watching for ripper to finish for 1630 more seconds
+2022-01-24 20:08:55.543 rip:171 INFO   Found this many tiff files: 44595
+2022-01-24 20:08:55.545 rip:163 INFO Watching for ripper to finish for 1620 more seconds
+2022-01-24 20:09:05.864 rip:171 INFO   Found this many tiff files: 44779
+2022-01-24 20:09:05.865 rip:163 INFO Watching for ripper to finish for 1610 more seconds
+2022-01-24 20:09:16.180 rip:171 INFO   Found this many tiff files: 44967
+2022-01-24 20:09:16.182 rip:163 INFO Watching for ripper to finish for 1600 more seconds
+2022-01-24 20:09:26.504 rip:171 INFO   Found this many tiff files: 45150
+2022-01-24 20:09:26.506 rip:163 INFO Watching for ripper to finish for 1590 more seconds
+2022-01-24 20:09:36.834 rip:171 INFO   Found this many tiff files: 45328
+2022-01-24 20:09:36.836 rip:163 INFO Watching for ripper to finish for 1580 more seconds
+2022-01-24 20:09:47.157 rip:171 INFO   Found this many tiff files: 45521
+2022-01-24 20:09:47.159 rip:163 INFO Watching for ripper to finish for 1570 more seconds
+2022-01-24 20:09:57.506 rip:171 INFO   Found this many tiff files: 45712
+2022-01-24 20:09:57.509 rip:163 INFO Watching for ripper to finish for 1560 more seconds
+2022-01-24 20:10:07.825 rip:171 INFO   Found this many tiff files: 45903
+2022-01-24 20:10:07.827 rip:163 INFO Watching for ripper to finish for 1550 more seconds
+2022-01-24 20:10:18.154 rip:171 INFO   Found this many tiff files: 46096
+2022-01-24 20:10:18.155 rip:163 INFO Watching for ripper to finish for 1540 more seconds
+2022-01-24 20:10:28.463 rip:171 INFO   Found this many tiff files: 46293
+2022-01-24 20:10:28.465 rip:163 INFO Watching for ripper to finish for 1530 more seconds
+2022-01-24 20:10:38.841 rip:171 INFO   Found this many tiff files: 46293
+2022-01-24 20:10:38.841 rip:174 INFO Detected ripping is complete
+2022-01-24 20:10:48.852 rip:176 INFO Killing ripper
+2022-01-24 20:10:48.853 rip:178 INFO Ripper has been killed
+2022-01-24 20:10:48.901 rip:153 INFO Cleaned up!
