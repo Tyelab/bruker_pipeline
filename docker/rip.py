@@ -15,6 +15,8 @@ import platform
 import subprocess
 import time
 import os
+import stat
+import shutil
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +96,19 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     def get_tiffs():
         return set((tmp_tiff_dir).glob('*.ome.tif'))
 
+    def copy_back_files():
+        """
+        Copies back metadata files that Bruker copied to output directory.
+        This helps preserve the input directory contents.
+        """
+        paths_to_copy = [path for path in tmp_tiff_dir.iterdir() if not path.name.endswith("ome.tif")]
+        logger.info("Copying back files to input directory: %s" % paths_to_copy)
+        for path in paths_to_copy:
+            if path.is_file():
+                shutil.copy(path, data_dir)
+            else:
+                pass
+
     filelists = get_filelists()
 
     if not filelists:
@@ -158,6 +173,8 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     # with os.stat(path).st_size after globbing it from the path
 
     # TODO: Ripping .csv and ripping tiffs should be their own functions inside this script
+    # TODO: Should make a check to see if there are voltage recordings to convert. If there are,
+    # the csv converter should be called. If not, it should be skipped.
 
     # It takes a few seconds for the ripper to get started and create the csv file
     # Sleep the program for 5 seconds and then get the csvfile
@@ -231,7 +248,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     logger.info("Starting to rip tiff files...")
 
     while remaining_sec >= 0:
-        logging.info('Watching for ripper to finish for %d more seconds', remaining_sec)
+        logger.info('Watching for ripper to finish for %d more seconds', remaining_sec)
         remaining_sec -= RIP_POLL_SECS
         time.sleep(RIP_POLL_SECS)
 
@@ -242,11 +259,21 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         logging.info('  Found this many tiff files: %s', len(tiffs))
 
         if not tiffs_changed:
-            logging.info('Detected ripping is complete')
+            logger.info('Detected ripping is complete')
             time.sleep(RIP_EXTRA_WAIT_SECS)  # Wait before terminating ripper, just to be safe.
-            logging.info('Killing ripper')
+            logger.info('Killing ripper')
             process.kill()
-            logging.info('Ripper has been killed')
+            logger.info('Ripper has been killed')
+
+            logger.info("Changing permissions of data...")
+            os.chmod(tmp_tiff_dir, stat.S_IRWXG)
+
+            logger.info("Copying metadata back to raw_data directory...")
+            copy_back_files()
+            logger.info("Metadata and csv copied back to data directory.")
+
+
+
             return
 
     raise RippingError('Killed ripper because it did not finish within %s seconds' % RIP_TOTAL_WAIT_SECS)
