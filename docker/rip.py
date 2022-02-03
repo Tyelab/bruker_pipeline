@@ -17,6 +17,7 @@ import time
 import os
 import stat
 import shutil
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -226,6 +227,12 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     
     logger.info("Voltage .csv Ripping Complete!")
 
+    logger.info("Cleaning voltage recording into timestamps...")
+
+    get_behavior_timestamps(behavior_csv)
+
+    logger.info("Cleaned behavior file written!")
+
     # Register a cleanup function that will kill the ripping subprocess.  This handles the cases
     # where someone hits Cntrl-C, or the main program exits for some other reason.  Without
     # this cleanup function, the subprocess will just continue running in the background.
@@ -268,15 +275,46 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
             logger.info("Changing permissions of data...")
             os.chmod(tmp_tiff_dir, stat.S_IRWXG)
 
-            logger.info("Copying metadata back to raw_data directory...")
+            logger.info("Copying events file and metadata back to raw_data directory...")
             copy_back_files()
             logger.info("Metadata and csv copied back to data directory.")
-
-
 
             return
 
     raise RippingError('Killed ripper because it did not finish within %s seconds' % RIP_TOTAL_WAIT_SECS)
+
+
+def get_behavior_timestamps(behavior_csv):
+
+    output_filename = SCRATCH_DIRECTORY / behavior_csv.parents[1] / "_".join(behavior_csv.stem, "events.csv")
+
+    logger.info("Writing cleaned behavior file to: %s" % str(output_filename))
+
+    raw_behavior_df = pd.read_csv(behavior_csv, index_col="Time(ms)").rename(columns=lambda col:col.strip())
+
+    raw_behavior_df = raw_behavior_df > 2
+
+    raw_behavior_df = raw_behavior_df.astype(int).diff().fillna(0)
+
+    behavior_keys = []
+
+    clean_behavior_dict = {}
+
+    for key in raw_behavior_df.columns:
+
+        behavior_keys.append("_".join([key, "on"]))
+        behavior_keys.append("_".join([key, "off"]))
+
+    for key in behavior_keys:
+        if "on" in key:
+            clean_behavior_dict[key] = raw_behavior_df.query(key.split("_")[0] + " == 1").index.tolist()
+        else:
+            clean_behavior_dict[key] = raw_behavior_df.query(key.split("_")[0] + " == -1").index.tolist()
+
+    output_dataframe = pd.DataFrame.from_dict(clean_behavior_dict, orient="index").transpose()
+
+    output_dataframe.to_csv(output_filename)
+            
 
 
 if __name__ == "__main__":
@@ -288,6 +326,7 @@ if __name__ == "__main__":
     parser.add_argument('--ripper_version',
                         type=str,
                         help='Prairie View version from environment file.')
+    # TODO: Implement number of images check so it's not using time
     # parser.add_argument('--num_images',
     #                     type=int,
     #                     required=True,

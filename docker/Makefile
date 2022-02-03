@@ -1,4 +1,4 @@
-IMAGE_TAG=20220119
+IMAGE_TAG=20220203
 IMAGE_NAME=snlkt-bruker-ripper
 
 build: build_docker
