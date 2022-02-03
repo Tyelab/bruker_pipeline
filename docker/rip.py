@@ -273,7 +273,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
             logger.info('Ripper has been killed')
 
             logger.info("Changing permissions of data...")
-            os.chmod(tmp_tiff_dir, stat.S_IRWXG)
+            os.chmod(tmp_tiff_dir, 0o0770)
 
             logger.info("Copying events file and metadata back to raw_data directory...")
             copy_back_files()
