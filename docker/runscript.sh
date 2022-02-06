@@ -15,4 +15,4 @@ export WINEARCH="win64"
 
 cp -r /home/wineuser/.wine "${WINEPREFIX}"
 
-${CMDPREFIX} -a /usr/bin/python3 /apps/rip.py --directory $1 --ripper_version $2 --log_file $3
+${CMDPREFIX} -a python3 /apps/rip.py --directory $1 --ripper_version $2 --log_file $3

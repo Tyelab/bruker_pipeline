@@ -15,7 +15,6 @@ import platform
 import subprocess
 import time
 import os
-import stat
 import shutil
 import pandas as pd
 
@@ -38,7 +37,7 @@ RIPPER_DIRECTORY = Path("/apps/prairie_view/")
 
 # The local scratch directory, called /scratch, is named as /temp/ in the container
 # This is where the ripper will be writing data to.
-SCRATCH_DIRECTORY = Path("/temp/")
+SCRATCH_DIRECTORY = Path("/temp/snlkt2p")
 
 # The data directory is where the raw data is located that needs conversion
 # In the docker container, the specific directory being converted is mounted
@@ -272,12 +271,27 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
             process.kill()
             logger.info('Ripper has been killed')
 
+            # Change permissions of the data so any SNLKT member can use them
             logger.info("Changing permissions of data...")
-            os.chmod(tmp_tiff_dir, 0o0770)
+            permissions_command = ["chmod -R 770 %s" % tmp_tiff_dir]
 
-            logger.info("Copying events file and metadata back to raw_data directory...")
-            copy_back_files()
-            logger.info("Metadata and csv copied back to data directory.")
+            permissions_status = subprocess.run(permissions_command, capture_output=True)
+
+            if permissions_status.returncode == 0:
+                logger.info("Permissions changed successfully")
+            else:
+                logger.warning("Permissions change failed")
+                logger.info(permissions_status.stderr.decode())
+
+            try:
+                logger.info("Copying events file and metadata back to raw_data directory...")
+                copy_back_files()
+                logger.info("Metadata and csv copied back to data directory.")
+            except PermissionError:
+                logger.warning("Copying files to origin failed")
+                logger.info("Likely failed b/c Prairie View did not move metadata files")
+            except:
+                logger.warning("Unknown error")
 
             return
 
@@ -286,7 +300,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
 def get_behavior_timestamps(behavior_csv):
 
-    output_filename = SCRATCH_DIRECTORY / behavior_csv.parents[1] / "_".join(behavior_csv.stem, "events.csv")
+    output_filename = DATA_DIRECTORY / behavior_csv.parents[1] / "_".join([behavior_csv.stem, "events.csv"])
 
     logger.info("Writing cleaned behavior file to: %s" % str(output_filename))
 

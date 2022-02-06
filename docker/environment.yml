@@ -5,6 +5,4 @@ channels:
 dependencies:
   - pip=20.1.1
   - python=3.8.5
-  - pandas
-  - pip:
-      - lxml
+  - pandas=1.3
