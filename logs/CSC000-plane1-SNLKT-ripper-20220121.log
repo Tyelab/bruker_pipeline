@@ -659,3 +659,5 @@ CSC000-plane1-SNLKT-ripper
 2022-01-21 16:17:07.964 rip:132 INFO Killing ripper
 2022-01-21 16:17:07.966 rip:134 INFO Ripper has been killed
 2022-01-21 16:17:08.011 rip:106 INFO cleaned up!
+2022-02-03 16:40:43.772 rip:345 INFO Container Started for /data/
+2022-02-03 16:41:28.851 rip:345 INFO Container Started for /data/20211105_CSE011_plane1_-329.275_raw-010/

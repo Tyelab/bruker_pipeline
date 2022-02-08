@@ -37,7 +37,7 @@ RIPPER_DIRECTORY = Path("/apps/prairie_view/")
 
 # The local scratch directory, called /scratch, is named as /temp/ in the container
 # This is where the ripper will be writing data to.
-SCRATCH_DIRECTORY = Path("/temp/snlkt2p")
+SCRATCH_DIRECTORY = Path("/temp/")
 
 # The data directory is where the raw data is located that needs conversion
 # In the docker container, the specific directory being converted is mounted
@@ -56,7 +56,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     and checks to ensure that no tiffs currently reside in output directory. Executes
     a subprocess that starts the ripper. The lab's naming convention has the Voltage Recording
     converted first, so the output directory is polled for size of the .csv being built. When
-    between polls the file size has remained the same, the voltage conversion is detected as being
+    the file size has remained the same between polls, the voltage conversion is detected as being
     completed. It will immediately begin converting the imaging data into tiffs and poll the file
     system for the number of tiffs in the output directory. Once the number of tiffs is the same
     between polls, the conversion is detected as complete and the process is killed. Once the 
@@ -177,7 +177,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     # the csv converter should be called. If not, it should be skipped.
 
     # It takes a few seconds for the ripper to get started and create the csv file
-    # Sleep the program for 5 seconds and then get the csvfile
+    # Sleep the program for 10 seconds and then get the csvfile
     time.sleep(5)
 
     behavior_glob = tmp_tiff_dir.glob("*")
@@ -273,7 +273,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
             # Change permissions of the data so any SNLKT member can use them
             logger.info("Changing permissions of data...")
-            permissions_command = ["chmod -R 770 %s" % tmp_tiff_dir]
+            permissions_command = ["chmod -R 770 {}".format(tmp_tiff_dir)]
 
             permissions_status = subprocess.run(permissions_command, capture_output=True)
 
