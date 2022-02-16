@@ -104,22 +104,23 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         paths_to_copy = [path for path in tmp_tiff_dir.iterdir() if not path.name.endswith("ome.tif")]
         for path in paths_to_copy:
             if path.is_file():
-                logger.info("Checking file for moving: %s" % path)
-                try:
-                    if path.exists():
-                        logger.info("File was COPIED by Bruker, not MOVED")
-                        logger.info("Deleting file...")
-                        path.unlink()
-                        logger.info("File deleted")
-                    else:
-                        logger.info("File was MOVED by Bruker, not COPIED")
-                        logger.info("Moving file back to original location")
-                        shutil.move(path, data_dir)
-                        logger.info("File MOVED back to original location")
-                except PermissionError:
-                    logger.warning("Error: ", PermissionError.strerror)
-                except:
-                    logger.warning("Unknown error...")
+                tmp_data_dir = data_dir / path.name
+                if tmp_data_dir.exists():
+                    logger.info("File was COPIED, not MOVED. Removing file...")
+                    path.unlink()
+                    logger.info("File deleted")
+                else:
+                    logger.info("Moving file: %s" % path)
+                    try:
+                        shutil.move(str(path), str(data_dir))
+                        logger.info("File moved to origin")
+                    except PermissionError:
+                        logger.warning("Error: ", PermissionError.strerror)
+                    except AttributeError:
+                        logger.warning("Error: Attribute Error, likely 'PosixPath' object has no attribute 'rstrip'")
+                        logger.warning("Check if paths were turned into strings in the shutil move call")
+                    except:
+                        logger.warning("Unknown error...")
             elif path.is_dir:
                 try:
                     logger.info("Found directory, unlinking %s" % path)
@@ -177,7 +178,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         "-AddRawFileWithSubFolders",
         str(data_dir),
         "-SetOutputDirectory",
-        str(SCRATCH_DIRECTORY + "_tiffs"),
+        str(SCRATCH_DIRECTORY),
         "-Convert"
     ]
 
@@ -353,6 +354,12 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
             
             except:
                 logger.warning("Unknown error")
+
+            
+            # Lastly, we want the folder to have "_tiffs" appended to it for clarity and for copying later
+            # to the server.
+            tmp_tiff_dir.rename(str(tmp_tiff_dir) + "_tiffs")
+
 
             return
 
