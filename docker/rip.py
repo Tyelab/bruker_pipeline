@@ -1,9 +1,9 @@
 # Jeremy Delahanty January 2022
+# Timestamp Creation written by Deryn LeDuke, Kyle Fischer PhD 2021
 # Main library written by Chris Roat, Stanford University Deisseroth Lab August 2021
 # https://github.com/chrisroat
 # https://github.com/deisseroth-lab/two-photon/
 # Adapted for the Tye Lab by Jeremy Delahanty @ Salk Institute for Dr. Kay Tye's Lab
-# Added functionality with polling file system for csv files as they're written
 
 """Library for running Bruker image ripping utility."""
 
@@ -102,12 +102,33 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         This helps preserve the input directory contents.
         """
         paths_to_copy = [path for path in tmp_tiff_dir.iterdir() if not path.name.endswith("ome.tif")]
-        logger.info("Copying back files to input directory: %s" % paths_to_copy)
         for path in paths_to_copy:
             if path.is_file():
-                shutil.copy(path, data_dir)
-            else:
-                pass
+                logger.info("Checking file for moving: %s" % path)
+                try:
+                    if path.exists():
+                        logger.info("File was COPIED by Bruker, not MOVED")
+                        logger.info("Deleting file...")
+                        path.unlink()
+                        logger.info("File deleted")
+                    else:
+                        logger.info("File was MOVED by Bruker, not COPIED")
+                        logger.info("Moving file back to original location")
+                        shutil.move(path, data_dir)
+                        logger.info("File MOVED back to original location")
+                except PermissionError:
+                    logger.warning("Error: ", PermissionError.strerror)
+                except:
+                    logger.warning("Unknown error...")
+            elif path.is_dir:
+                try:
+                    logger.info("Found directory, unlinking %s" % path)
+                    shutil.rmtree(path)
+                except OSError:
+                    logger.warning("Error: ", OSError.strerror)
+                except:
+                    logger.warning("Unknown directory removal error...")
+
 
     filelists = get_filelists()
 
@@ -156,7 +177,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         "-AddRawFileWithSubFolders",
         str(data_dir),
         "-SetOutputDirectory",
-        str(SCRATCH_DIRECTORY),
+        str(SCRATCH_DIRECTORY + "_tiffs"),
         "-Convert"
     ]
 
@@ -178,7 +199,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
     # It takes a few seconds for the ripper to get started and create the csv file
     # Sleep the program for 10 seconds and then get the csvfile
-    time.sleep(5)
+    time.sleep(10)
 
     behavior_glob = tmp_tiff_dir.glob("*")
 
@@ -218,7 +239,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
             logger.info("Still ripping voltage recording...")
         
-        # If the sizes are different, the ripper is done with the .csv
+        # If the sizes are NOT different, the ripper is done with the .csv!
         # Exit the loop by setting ripping_csv to false
         else:
 
@@ -264,6 +285,14 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
         logging.info('  Found this many tiff files: %s', len(tiffs))
 
+        # In order to use f string methods, we can't have empty brackets in the statement
+        # which the bash command requires for executing the permission commands
+        # Assuming there's a need to change permissions is a safe bet because not everyone in
+        # the lab will have the 002 umask in their .login files  So we create a variable brackets
+        # to use in the f string
+
+        brackets = "{}"
+
         if not tiffs_changed:
             logger.info('Detected ripping is complete')
             time.sleep(RIP_EXTRA_WAIT_SECS)  # Wait before terminating ripper, just to be safe.
@@ -272,24 +301,56 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
             logger.info('Ripper has been killed')
 
             # Change permissions of the data so any SNLKT member can use them
-            logger.info("Changing permissions of data...")
-            permissions_command = ["chmod -R 770 {}".format(tmp_tiff_dir)]
+            logger.info("Changing permissions of directory...")
 
-            permissions_status = subprocess.run(permissions_command, capture_output=True)
+            # Code 775 allows the owner and members of the group all permissions: read, write, and execute
+            # Others are only allowed to read the directories
+            dir_permissions_command = [f"find {tmp_tiff_dir} -type d -exec chmod 775 {brackets} +"]
 
-            if permissions_status.returncode == 0:
-                logger.info("Permissions changed successfully")
+            try:
+                
+                # Run the permissions change as a subprocess that uses the available Linux shell
+                dir_permissions_status = subprocess.run(dir_permissions_command, capture_output=True, shell=True)
+            
+            except:
+                logger.warning("Permissions subprocess failed: Directories")
+
+            # A return code of 0 indicates that the subprocess completed without any errors. Log the success.
+            if dir_permissions_status.returncode == 0:
+                logger.info("Permissions for directory changed successfully")
+            
+            # Any other code indicates something went wrong. Log that and record the error that was encountered...
             else:
                 logger.warning("Permissions change failed")
-                logger.info(permissions_status.stderr.decode())
+                logger.info(dir_permissions_status.stderr.decode())
+
+
+            logger.info("Changing permissions of files in %s" % tmp_tiff_dir)
+
+            # Code 664 allows owner and members of the group permissions to: read, write. Execute permissions are
+            # unnecessary for these files because they are not executable (meaning you can't "execute" a .ome.tif)
+            # Others can read the file but do nothing else.
+            file_permissions_command = [f"find {tmp_tiff_dir} -type f -exec chmod 664 {brackets} +"]
+
+            try:
+
+                # Run the permissions change as a subprocess that uses the available Linux shell
+                file_permissions_status = subprocess.run(file_permissions_command, capture_output=True, shell=True)
+
+            except:
+                logger.warning("Permissions subprocess failed: Files")
+
+            if file_permissions_status.returncode == 0:
+                logger.info("Permissions for file changed successfully")
+            
+            else:
+                logger.warning("Permissions change failed: Files")
+                logger.info(file_permissions_status.stderr.decode())
 
             try:
                 logger.info("Copying events file and metadata back to raw_data directory...")
                 copy_back_files()
-                logger.info("Metadata and csv copied back to data directory.")
-            except PermissionError:
-                logger.warning("Copying files to origin failed")
-                logger.info("Likely failed b/c Prairie View did not move metadata files")
+            
             except:
                 logger.warning("Unknown error")
 
@@ -298,38 +359,59 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     raise RippingError('Killed ripper because it did not finish within %s seconds' % RIP_TOTAL_WAIT_SECS)
 
 
-def get_behavior_timestamps(behavior_csv):
+def get_behavior_timestamps(behavior_csv: Path):
+    """
+    Cleans raw .csv file into timestamps.
 
-    output_filename = DATA_DIRECTORY / behavior_csv.parents[1] / "_".join([behavior_csv.stem, "events.csv"])
+    The ripper outputs a large .csv file that includes every sample that the DAQ takes regardless of
+    the sample's value. There is no way to change this behavior so it only records timestamps. Therefore,
+    we have to read in the file, get the start and stop times of the events, and then write out those
+    timestamps to a new .csv file. This file will be written to the raw data's directory.
+
+    Args:
+        behavior_csv:
+            Path to converted .csv file that has been converted and written to the machine's scratch space
+
+    """
+
+    # Output timestamps to the input directory and append _events to the filename
+    output_filename = DATA_DIRECTORY / "_".join([behavior_csv.stem, "events.csv"])
 
     logger.info("Writing cleaned behavior file to: %s" % str(output_filename))
 
+    # Read in the csv file and strip the columns of beginning space that Prairie View gives for some reason
     raw_behavior_df = pd.read_csv(behavior_csv, index_col="Time(ms)").rename(columns=lambda col:col.strip())
 
+    # Anything below 2V in these files is certainly noise; remove them with this filter
     raw_behavior_df = raw_behavior_df > 2
 
+    # Assign the datatypes to integer values, take the difference between neighboring values, and fill
+    # any NaN values with 0s, although there shouldn't be any
     raw_behavior_df = raw_behavior_df.astype(int).diff().fillna(0)
 
     behavior_keys = []
 
     clean_behavior_dict = {}
 
+    # Grab columns and create on/off keys for writing out timestamps later
     for key in raw_behavior_df.columns:
 
         behavior_keys.append("_".join([key, "on"]))
         behavior_keys.append("_".join([key, "off"]))
 
+    # For each key, append values where there's a value of 1, meaning ON, to the ON keys
+    # and where there's a value of -1 append to the OFF keys.
     for key in behavior_keys:
         if "on" in key:
             clean_behavior_dict[key] = raw_behavior_df.query(key.split("_")[0] + " == 1").index.tolist()
         else:
             clean_behavior_dict[key] = raw_behavior_df.query(key.split("_")[0] + " == -1").index.tolist()
 
+    # Create new dataframe from the dictionary and transpose from rows to columns so .csv is written correctly
     output_dataframe = pd.DataFrame.from_dict(clean_behavior_dict, orient="index").transpose()
 
     output_dataframe.to_csv(output_filename)
             
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Preprocess 2-photon raw data into individual tiffs.')
@@ -357,6 +439,6 @@ if __name__ == "__main__":
                     datefmt='%Y-%m-%d %H:%M:%S')
 
 
-    logging.info("Container Started for %s" % args.directory)
+    logging.info("Container starting for %s" % args.directory)
 
     raw_to_tiff(args.directory, args.ripper_version)
