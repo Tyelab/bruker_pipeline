@@ -1,76 +1,54 @@
 # bruker_pipeline
-Data processing pipeline for data from the Bruker Ultima microscope in conjunction with bruker_control.
+Data pre-processing pipeline for data from the Bruker Ultima multi-photon microscope in conjunction with bruker_control.
 
 ## Purpose
-Converting data from the RAW format Bruker outputs into .ome.tiff files and then to .h5/.zarr requires a pipeline of its own. The goals for this repository are as follows:
-- Perform image ripping in a standardized way that can be performed without requiring the use of the local machine (although it will be possible to do it on the local machine and perhaps always done there after we have upgraded ethernet, to be determined)
-- Voltage Recording ripping should similarly be performed but without the intermittant file generation (as there are no files other than the raw data generated)
-- Write .ome.tiff files to snlscratch25 and then put concatenated .h5/.zarr data back onto the `snlktdata/_DATA` directory. This will then be linked to an `NWB File` in the `raw` folder of the subject that had their images ripped.
-- This processing should follow an event driven architecture where the moment a file transfer is complete to the server, a machine like Cheetos can immediately perform ripping, concatenation, and, preferrably, pre-processing via Suite2p/ezCalcium if a known template for a brain structure/project is available.
-- Suite2p/ezCalcium processing of these concatenated files will be done preferentially in the cluster but will not be made exclusive to it. Until we have 10GB lines to/from our server (which is allegedly something coming in the future) to our lab's workstation machines, processing on the cluster should be the first choice in my (Jeremy's) opinion.
+Converting data from the RAW format Bruker outputs into .ome.tiff files and then to .h5/.zarr requires a pipeline of its own. The code in this repository adapts what was written by
+[Chris Roat](https://github.com/chrisroat) and [Tyler Benster](https://github.com/tbenst) for the [Deisseroth Lab](https://github.com/deisseroth-lab/two-photon). It also uses code written by Deryn LeDuke and Kyle Fischer PhD for the [Tye Lab](https://github.com/Tyelab).
 
-This repository will remain specific for the ripping process from Bruker. Other 2P procesing could maybe follow a similar structure to the Deisseroth's lab's two-photon repo that is forked here.
+This repository will remain specific for the ripping process for data coming off microscopes manufactured by Bruker.
 
+## User Guide
 
-## Notes:
-- /usr/bin/entrypoint
+The main executable is a program called `beyblade.sh`. In short, this will grab a list of directories that need conversion from a directory called `raw_conversion`,
+spawn a Docker container for each ripper, and write out .ome.tif files to a folder locally. Conversions from tiffs to H5 can be executed via a separate script in `MATLAB`
+or `Python` depending on your use case. The steps are as follows:
 
-- [xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml)
+1. Sign into `cheetos.snl.salk.edu`. This is currently the only machine with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
 
-An X server (which runs the X Window System on local machines) that handles access to graphics cards, display screens, and input devices.
-It's a cross-platform free client-server system that manages GUIs on single computers or networks of computers. Allows for server program
-to accomodate the requests of multiple clients. X server-client comms are managed by the X protocol that first processes client requests,
-the response by the server, and the sending of events/errors from the server back to the client.
+2. Navigate to `/snlkt/data/bruker_pipeline` via the `cd` command, as in: `cd /snlkt/data/bruker_pipeline/`
 
-Its primary use case was intended for testing servers with no display hardware and no physical input devices.
+3. Create a `.txt` file containing the *full paths* to your data on the server. The file should look something like this:
 
-One forum I found states that [Wine assumes there to be a display available](https://github.com/Winetricks/winetricks/issues/934).
+```
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211104/20211104_CSC013_plane1_-538.875_raw-003
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211111/20211111_CSC013_plane1_-367.25_raw-026
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211118/20211118_CSC013_plane1_-749.075_raw-046
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211125/20211125_CSC013_plane1_-357.625_raw-067
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211202/20211202_CSC013_plane1_-727.1_raw-085
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211209/20211209_CSC013_plane1_-746.175_raw-103
+/snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211214/20211214_CSC013_plane1_-362.075_raw-121
+```
 
-- winetricks -q
-Wine tricks is a more powerful version of winecfg. Winecfg gives the ability to change settings of WINE itself. Winetricks allows you to
-modify the actual Windows layer and install important components like .dlls and system fonts and the ability to edit the Windows registry.
-I have yet been able to find what the -q command means here.
+Substitute the paths to your *raw* directories. As of 2/23/22, it appears that performance is maintained for up to 7 rippers running at once. This file must be saved in
+in the `raw_conversion` directory. Ideally, it would be given a unique filename in the following format:
 
-- vcrun2015
-I believe that this references an installation of Visual Studio C++ code, but am not certain yet...
+- YYYYMMDD_project#conversion: `20220223_specialk_cs1`
 
-- ENV PATH /opt/conda/bin:$PATH
-This is a way for Docker to instantiate an ENV, or environment, variable. I believe it creates this path for the image.
+If you run a second conversion on the same day for the same project, increment the `#conversion`, as in `20220223_specialk_cs2`.
 
-- RUN wget --quiet miniconda link
-Installs miniconda to the image
+4. Ensure that you have your Docker permissions active by typing `sudo docker images`. The terminal will ask for your `SNL` password. Remember that the password will not be displayed as you type. If successful, you should see a list of images including `snlkt-bruker-ripper`. This is the image that the ripper uses.
 
-- -O ~/miniconda.sh
-Renames downloaded file to miniconda.sh; I believe this is here for ease of use with the next commands
+5. If you have no errors to this point, type: `./beyblade.sh`. You will be presented with messages stating which containers are being started for you. Next, you will see multiple error and fixme messages. These are expected and related to internal workarounds that `Wine` has to use to run Windows software on Linux machines.
 
-- miniconda.sh -b -p /opt/conda
-Unsure what -b stands for, I'm guessing that -p means to set a path. Unsure why the `/opt/conda` path is written here.
+6. When these messages have been completed, hit enter to be returned to your terminal.
 
-- conda clean -tipsy
-Unsure what -tipsy does, can't find documentation for it. Conda clean removes any unusued packages.
+The amount of time it takes to perform conversions to ome.tif depends on how many planes you ran as well as how many channels you recorded from. Although performance varies slightly depending on network traffic and how busy Cheetos is at a given moment, you can expect things to take a couple minutes longer than the recording you took. In other words:
+- 30 minute imaging session is complete in about 35 minutes.
 
-Tipsy is simply the list of flags -t -i -p -s -y.
+If you want to ensure your containers are running, you can:
 
--t or --tarballs
--i or --index-cache
--p or --packages
--s or ... eh that was not documented, it probably relates to --source-cache and this issue
--y or --yes
+- Type `sudo docker container ls -a` which will display all the containers you have spawned to the terminal for you.
 
-https://github.com/jupyter/docker-stacks/issues/861
-Per this issue, using `-all -f -y` are the correct flags.
+- Go into the folder titled `logs` and find the recording you are converting for. The ripper logs what it is working on and if there's any issues with execution.
 
-Interestingly, Chris uses `-all -f -y` later in the Dockerfile.
-
-- ln -s
-Unsure what the ln and the -s does, I believe it has to do with setting links but can't be sure.
-
-- echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
-Adds conda.sh to the startup script for container
-
-- echo "conda activate base" >> ~/.bashrc
-Adds command to activate conda base to startup command for container.
-
-
-
-
+If you have VS Code installed, updates made to the file will be presented to you in real time. If not, you'll have to close and reload the file to see progress.

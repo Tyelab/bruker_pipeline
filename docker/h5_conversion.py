@@ -38,5 +38,5 @@ def tiff2hdf5(
 
 with tifffile.Timer():
     tiff2hdf5(
-        '/scratch/snlkt2p/test.hdf5', '/scratch/snlkt2p/20211105_CSE010_plane1_-355.85_raw-009/*Ch2*.tif', compression='gzip'
+        '/scratch/test_none.hdf5', '/scratch/20211214_CSC013_plane1_-362.075_raw-121_tiffs/*Ch2*.tif',
     )
