@@ -34,7 +34,7 @@ sudo docker run \
        --workdir=/home/${USER} \
        --env=TZ=America/Los_Angeles \
        --cpus 2 \
-       --shm-size=1g \
+       --shm-size=2g \
        --name=$1 \
        snlkt-bruker-ripper:latest \
-       /apps/runscript.sh $3 $4 $log_filename
+       /apps/runscript.sh $3 $4 $log_filename $5

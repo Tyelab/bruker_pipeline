@@ -23,7 +23,11 @@ logger = logging.getLogger(__name__)
 # Ripping process does not end cleanly, so the filesystem is polled to detect the
 # processing finishing.  The following variables relate to the timing of that polling
 # process.
-RIP_TOTAL_WAIT_SECS = 3600  # Total time to wait for ripping before killing it.
+
+# Total wait time is very large in case of multiple channels being recorded
+# This is just in case the ripper is stuck hanging for some long period of time
+# so it can be automatically killed.
+RIP_TOTAL_WAIT_SECS = 5400  # Total time to wait for ripping before killing it.
 RIP_EXTRA_WAIT_SECS = 10  # Extra time to wait after ripping is detected to be done.
 RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 
@@ -49,7 +53,7 @@ class RippingError(Exception):
     """Error raised if problems encountered during data conversion."""
 
 
-def raw_to_tiff(raw_dir: Path, ripper_version: str):
+def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
     """Convert Bruker RAW files to TIFF/.csv files using ripping utility specified with `ripper`.
     
     From the specified data directory, grabs the raw file lists, raw/unconverted data,
@@ -59,14 +63,16 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     the file size has remained the same between polls, the voltage conversion is detected as being
     completed. It will immediately begin converting the imaging data into tiffs and poll the file
     system for the number of tiffs in the output directory. Once the number of tiffs is the same
-    between polls, the conversion is detected as complete and the process is killed. Once the 
-    subprocess is killed, the container will be destroyed.
+    as the expected number of images, the ripper detects that the conversion process is finished.
+    Once the subprocess is killed, the container will be destroyed.
 
     Args:
         raw_dir:
             Path to raw data that needs converting.
         ripper_version:
             Version of ripper to use, as in major.minor.64.minor (ie 5.6.64.200)
+        num_images:
+            Total number of images to poll for before killing the ripper.
     
     """
 
@@ -101,14 +107,25 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
         Copies back metadata files that Bruker copied to output directory.
         This helps preserve the input directory contents.
         """
+        # Get list of paths in the output directory for files that are not tif files. These must be moved
+        # back to their original directories
         paths_to_copy = [path for path in tmp_tiff_dir.iterdir() if not path.name.endswith("ome.tif")]
+        
+        # For each path in the list, if the path links to a file
         for path in paths_to_copy:
             if path.is_file():
+
+                # Assign a temporary data directory for the file using the directory it would have originated from
                 tmp_data_dir = data_dir / path.name
+
+                # If the file exists in the original directory, the file would have been copied and not moved
+                # by Bruker's ripper. Delete the file with unlink and log that it was done.
                 if tmp_data_dir.exists():
                     logger.info("File was COPIED, not MOVED. Removing file...")
                     path.unlink()
                     logger.info("File deleted")
+                
+                # Otherwise, try moving the file and log any errors that occur in case an exception is thrown.
                 else:
                     logger.info("Moving file: %s" % path)
                     try:
@@ -121,6 +138,9 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
                         logger.warning("Check if paths were turned into strings in the shutil move call")
                     except:
                         logger.warning("Unknown error...")
+            
+            # If the path is a directory, it is likely a useless directory like the References directory which we don't
+            # require. Log that it was found and try removing it. If removal fails, log that an error occurred.
             elif path.is_dir:
                 try:
                     logger.info("Found directory, unlinking %s" % path)
@@ -199,7 +219,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
     # the csv converter should be called. If not, it should be skipped.
 
     # It takes a few seconds for the ripper to get started and create the csv file
-    # Sleep the program for 10 seconds and then get the csvfile
+    # Sleep the program for 10 seconds and then get the csv file
     time.sleep(10)
 
     behavior_glob = tmp_tiff_dir.glob("*")
@@ -294,7 +314,7 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str):
 
         brackets = "{}"
 
-        if not tiffs_changed:
+        if tiffs == num_images:
             logger.info('Detected ripping is complete')
             time.sleep(RIP_EXTRA_WAIT_SECS)  # Wait before terminating ripper, just to be safe.
             logger.info('Killing ripper')
@@ -430,10 +450,10 @@ if __name__ == "__main__":
                         type=str,
                         help='Prairie View version from environment file.')
     # TODO: Implement number of images check so it's not using time
-    # parser.add_argument('--num_images',
-    #                     type=int,
-    #                     required=True,
-    #                     help='Total number of images to be converted for the recording.')
+    parser.add_argument('--num_images',
+                        type=int,
+                        required=True,
+                        help='Total number of images to be converted for the recording.')
     parser.add_argument('--log_file',
                         type=str,
                         required=True,
