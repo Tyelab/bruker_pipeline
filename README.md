@@ -10,8 +10,7 @@ This repository will remain specific for the ripping process for data coming off
 ## User Guide
 
 The main executable is a program called `beyblade.sh`. In short, this will grab a list of directories that need conversion from a directory called `raw_conversion`,
-spawn a Docker container for each ripper, and write out .ome.tif files to a folder locally. Conversions from tiffs to H5 can be executed via a separate script in `MATLAB`
-or `Python` depending on your use case. The steps are as follows:
+spawn a Docker container for each ripper, and write out .ome.tif files to a folder locally. Conversions from tiffs to H5 can be executed via a separate script in `MATLAB` or `Python` depending on your use case. The steps are as follows:
 
 1. Sign into `cheetos.snl.salk.edu`. This is currently the only machine with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
 
@@ -29,8 +28,7 @@ or `Python` depending on your use case. The steps are as follows:
 /snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211214/20211214_CSC013_plane1_-362.075_raw-121
 ```
 
-Substitute the paths to your *raw* directories. As of 2/23/22, it appears that performance is maintained for up to 7 rippers running at once. This file must be saved in
-in the `raw_conversion` directory. Ideally, it would be given a unique filename in the following format:
+Substitute the paths to your *raw* directories. As of 2/23/22, it appears that performance is maintained for up to 7 rippers running at once. This file must be saved in the `raw_conversion` directory. Ideally, it would be given a unique filename in the following format:
 
 - YYYYMMDD_project#conversion: `20220223_specialk_cs1`
 
@@ -42,8 +40,12 @@ If you run a second conversion on the same day for the same project, increment t
 
 6. When these messages have been completed, hit enter to be returned to your terminal.
 
-The amount of time it takes to perform conversions to ome.tif depends on how many planes you ran as well as how many channels you recorded from. Although performance varies slightly depending on network traffic and how busy Cheetos is at a given moment, you can expect things to take a couple minutes longer than the recording you took. In other words:
-- 30 minute imaging session is complete in about 35 minutes.
+The amount of time it takes to perform conversions to ome.tif depends on how many planes you ran as well as how many channels you recorded from. Although performance varies slightly depending on network traffic and how busy Cheetos is at a given moment, you can expect things to take somewhat longer than the recording you took per channel.
+
+- 30 minute imaging session for one channel is complete in about 35 minutes.
+- 30 minute imaging session for two channels is complete in about 150 minutes
+
+The ripper appears to slow down as it churns through the data from multiple channels. After about 50k images, the ripper only reliably converts about 100 Tiffs every 10 seconds. This could be due to the fact that the binaries being read for converting raw data into tiffs is being sent over the network or potentially due to RAM limitations imposed by the script that builds the docker container. Another potential reason for the slowdown is the cost associated with globbing an ever increasing size of tiffs as a way of checking how many files are present in the folder As of 3/28/22 this is being further investigated.
 
 If you want to ensure your containers are running, you can:
 
