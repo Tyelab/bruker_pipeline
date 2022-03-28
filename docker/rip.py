@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 # Total wait time is very large in case of multiple channels being recorded
 # This is just in case the ripper is stuck hanging for some long period of time
 # so it can be automatically killed.
-RIP_TOTAL_WAIT_SECS = 5400  # Total time to wait for ripping before killing it.
+RIP_TOTAL_WAIT_SECS = 7200  # Total time to wait for ripping before killing it.
 RIP_EXTRA_WAIT_SECS = 10  # Extra time to wait after ripping is detected to be done.
 RIP_POLL_SECS = 10  # Time to wait between polling the filesystem.
 
@@ -64,7 +64,9 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
     completed. It will immediately begin converting the imaging data into tiffs and poll the file
     system for the number of tiffs in the output directory. Once the number of tiffs is the same
     as the expected number of images, the ripper detects that the conversion process is finished.
-    Once the subprocess is killed, the container will be destroyed.
+    This will kill the subprocess for ripping and start performing permission bit changes. Once this
+    is completed, files will be moved or removed depending on their existence in the raw directory.
+    Finally, after completion, the container will be destroyed.
 
     Args:
         raw_dir:
@@ -291,7 +293,6 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
     atexit.register(cleanup)
 
     remaining_sec = RIP_TOTAL_WAIT_SECS
-    last_tiffs = {}
 
     logger.info("Starting to rip tiff files...")
 
@@ -300,9 +301,11 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
         remaining_sec -= RIP_POLL_SECS
         time.sleep(RIP_POLL_SECS)
 
+        # get_tiffs returns set, meaning unique instances of, tiff paths
         tiffs = get_tiffs()
-        tiffs_changed = (last_tiffs != tiffs)
-        last_tiffs = tiffs
+
+        # The length of this set is the number of images that have been converted.
+        num_tiffs = len(tiffs)
 
         logging.info('  Found this many tiff files: %s', len(tiffs))
 
@@ -314,7 +317,9 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
 
         brackets = "{}"
 
-        if tiffs == num_images:
+        # If the number of tiffs converted is the same as the number of images expected, kill the
+        # ripper.
+        if num_tiffs == num_images:
             logger.info('Detected ripping is complete')
             time.sleep(RIP_EXTRA_WAIT_SECS)  # Wait before terminating ripper, just to be safe.
             logger.info('Killing ripper')
@@ -329,7 +334,6 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
             dir_permissions_command = [f"find {tmp_tiff_dir} -type d -exec chmod 775 {brackets} +"]
 
             try:
-                
                 # Run the permissions change as a subprocess that uses the available Linux shell
                 dir_permissions_status = subprocess.run(dir_permissions_command, capture_output=True, shell=True)
             
@@ -468,4 +472,4 @@ if __name__ == "__main__":
 
     logging.info("Container starting for %s" % args.directory)
 
-    raw_to_tiff(args.directory, args.ripper_version)
+    raw_to_tiff(args.directory, args.ripper_version, args.num_images)

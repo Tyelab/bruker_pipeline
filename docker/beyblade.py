@@ -29,7 +29,6 @@ EXECUTED_DIRECTORY = Path("/snlkt/data/bruker_pipeline/executed_conversion")
 # or exited safely from the log files of previously executed. If the conversion failed for
 # some reason, another job should be scheduled for that conversion if possible.
 
-
 # TODO: Put checks for raw files/if tiffs or H5/zarrs exist already
 
 class RippingError(Exception):
@@ -227,7 +226,7 @@ def determine_num_images(raw_dir: Path, num_channels: int) -> int:
     # with [0] and get the index of the last frame. Multiply this
     # value by the number of channels to get total number of
     # images that were collected.
-    num_images = int(last_frame[0].attrib["index"] * num_channels)
+    num_images = int(last_frame[0].attrib["index"]) * num_channels
 
     return num_images
 
