@@ -20,6 +20,6 @@ def tiffs2zarr(filenames, zarrurl, chunksize, **kwargs):
             da.rechunk(chunks).to_zarr(zarrurl, **kwargs)
 
 
-tiff_path = Path("/scratch/20211214_CSC013_plane1_-362.075_raw-121_tiffs")
+tiff_path = Path("/scratch/snlkt_specialk_demo/CSE020/20211105_CSE020_plane1_-587.325_raw-013_tiffs")
 
-tiffs2zarr(tiff_path.glob('*Ch2*.tif'), "/scratch/lzvm_zarr", 128)
+tiffs2zarr(sorted(tiff_path.glob('*Ch2*.tif')), "/scratch/20211105_CSE020_no_subtraction/data.zarr", 128)
