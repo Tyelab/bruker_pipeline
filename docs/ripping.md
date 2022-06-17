@@ -20,17 +20,17 @@ The image ripping tool is tied explicitly to the version of Prairie View that ac
 
 Prairie View has somewhat frequent updates as the software engineering team at Bruker make improvements or squash bugs. One of their senior software engineers, Michael Fox, has been instrumental in getting the system functioning properly with bruker_control.py and deserves a firm handshake or high-five if you ever meet him one day. Updates can be found [here](https://pvupdate.blogspot.com/). Each update has it's own security code. You can email Bruker directly for this password, but the main place you should get the code is from the window that opens when Prairie View starts up. At the end of the initialization procedure, a message about new updates will be present and it will tell you the installation code.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/prairieview_update.png)
+![update_view](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/prairieview_update.png)
 
 Once you've installed the update, the previous version will have been copied to the Program Files location on the local machine with its specific version as the filename. Inside each installation, you'll find a folder called "Utilities". Here's what that looks like:
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/prairieview_tree.png)
+![tree view](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/prairieview_tree.png)
 
 Inside "Utilities" you'll find a bunch of different files with the extension .dll. This stands for [Dynamic Link Library](https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/dynamic-link-library) and is what the Windows OS uses to have software libraries communicate with each other and the operating system. One of these files is called `daq_int.dll` and it's critical to the ripping process.
 
 Prairie View, and therefore the ripper, enforces a rule that the version of the software that acquired the data is the exact same as the version that's converting it from RAW to ome.tif format. This is to ensure that the ripping process converts the data correctly without any risk of failure that might corrupt the RAW format or output malformed ome.tif files. If you attempt to rip a dataset collected in a version different from the ripper's, you'll be greeted with this message:
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripper_version_error.png)
+![version error](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripper_version_error.png)
 
 Per Michael Fox, the only way this will change in the future is if Bruker moves away from offline conversion entirely and instead always performs image conversion at runtime. On 11/30/21, Michael detailed that the "plan is to eventually eliminate raw files and just write multi-page TIFFs directly, with perhaps a legacy fallback for older computers which can’t keep up with that.  That could start as early as later next year depending on how other projects are going.  It is an extremely popular feature/request so the sooner the better."
 
@@ -38,7 +38,7 @@ Thus, you'll have to check the version of the dataset by investigating the recor
 
 The second row of this file will contain the version of Prairie View that collected the data. It looks like this:
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/xml_version.png)
+![xml version display](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/xml_version.png)
 
 Once you know which version of Prairie View was used to collect the data, you can find the specific version of Prairie View's ripper to match it with. There are multiple ways of performing this conversion and they're discussed below. Two require your hand holding the directories through the process, one is intended to be automated and event driven but is still under development.
 
@@ -71,7 +71,7 @@ The exact computer science behind this is complex, but in short RAM is accessibl
 
 For the ripper to work, it must allocate 4 bytes per channel per pixel of memory to the process. If the ripper can't find enough continuous memory when you call it, an error is raised that requires a restart of the computer. Note that this is not because there's not enough total memory available. The error message below, therefore, is somewhat misleading.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/file_conversion_memory_problem.png)
+![contiguous memory problem](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/file_conversion_memory_problem.png)
 
 If you encounter this error while doing the ripping locally on Bruker, exit Prairie View and then restart the machine.
 
@@ -87,7 +87,7 @@ There are only two ways to tell if the ripper fails in this manner:
 2. The ripper has disappeared from the screen.
 - If the ripper completes successfully, you will see the ripper waiting for your command with the "Status" found in the bottom left corner as "Idle."
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/idle_ripper.png)
+![ripper idling](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/idle_ripper.png)
 
 #### Performance Issues
 If you have sufficiently long recordings (greater than 15k images), writing outputs of the ripper over NFS (or a network file system) will inevitably slow to a crawl. In short, each file transfer invokes a series of steps the network must accomplish to ensure the data is sent and received properly. Although these steps don't take much time individually, a large sum of files makes these steps add up quickly.  Although the datacenter is linked together by fast ethernet connections, the transfer of so many individual files that individually invoke their own numerous steps during transfer incurs a substantial overhead that will slow the file writing speed to a crawl. Further, there is a network cache that is available that fills up if data isn't written to disk on the recieving machine quickly enough. Therefore, for best performance, it is best to write the new data to a local disk rather than over the network. This is what the Docker Containers running on cheetos do. Users then can invoke a transfer script to put the files into their appropriate location. Ideally you would convert the files into H5/zarr/bigtiff/H264 binaries before moving them.
@@ -116,7 +116,7 @@ Prairie View's image ripper can be found within the main window of the software 
 
 After selecting the application, a new window will appear...
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/image_block_ripper.png)
+![ripping app is opened](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/image_block_ripper.png)
 
 The ripper has several options available to it. When ripping locally on Bruker, you can write the images to your local directory.
 
@@ -124,25 +124,25 @@ You should *NOT* delete your original data after creating the images as this wil
 
 Next, click the "Add Folder" button. A new window will open.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/image_ripping_utility.png)
+![added folder](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/image_ripping_utility.png)
 
 You can navigate to the other raw data drive, but a common practice is to just navigate to the "Raw Data" drive located on Drive "E:" and select the "microscopy" folder.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/raw_drive.png)
+![raw drive selection](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/raw_drive.png)
 
 After selecting the microscopy folder, you will see the different file lists that the ripper has found.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripping_selected_folder.png)
+![file lists](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripping_selected_folder.png)
 
 While it's processing files, the ripper looks like this. Notice on the bottom left corner that the "Status" is listed as "Converting File List 1 of n" where n is the number of sessions being converted.
 
 For a typical session, there will be two File Lists present: one for the imaging and one for the voltage recording.
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/actively_converting.png)
+![ripper converting](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/actively_converting.png)
 
 When complete, the ripper looks just like it did before you got started. However, you'll notice in the bottom left corner that the "Status" is listed as "Idle".
 
-!(https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripping_completed.png)
+![ripper completed](https://github.com/Tyelab/bruker_pipeline/blob/main/docs/images/ripping_completed.png)
 
 When complete, the ripper looks just like it did before you got started. However, you'll notice in the bottom left corner that the "Status" is listed as "Idle".
 
