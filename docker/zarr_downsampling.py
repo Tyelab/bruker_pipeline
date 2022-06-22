@@ -13,11 +13,11 @@ def downsample_zarr(dataset_path):
     
     print("Loaded into zarr!")
     
-    transformed = dask.array.map_blocks(lambda x=da: img_as_ubyte(exposure.rescale_intensity(x)), dtype='uint16')
+    transformed = dask.array.map_blocks(lambda x=da: img_as_ubyte(exposure.rescale_intensity(x)), dtype='uint8')
     
     print("Rescaling complete!")
     
-    zarr.save_array("snlkt/data/specialk/data2/2p_uint8.zarr", transformed)
+    zarr.save_array("/scratch/data2/2p_uint8.zarr", transformed)
     
     print("Zarr saved!")
 
