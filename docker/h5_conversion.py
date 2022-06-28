@@ -11,6 +11,7 @@ import tifffile
 from imagecodecs import tiff_decode
 from numcodecs.blosc import Blosc
 from pathlib import Path
+from time import perf_counter
 
 
 def tiff2hdf5(
@@ -45,7 +46,7 @@ def tiff2hdf5(
     """
 
     # Define imread function to use with tifffile that relies upon the libtiff
-    # c library, which allows for fast decoding of tiff data into arrays that get
+    # C library, which allows for fast decoding of tiff data into arrays that get
     # written in parallel to zarr arrays.
     def imread(filename):
         # return image in TIFF file as numpy array
@@ -87,3 +88,12 @@ def tiff2hdf5(
     # You can operate on the images dask array object to finally output
     # everything into the HDF5 file that's specified in the input argument
     images.to_hdf5(hdf5file, dataset_name, chunks=chunksize, compressor=Blosc)
+
+
+if __name__ =="__main__":
+
+    start = perf_counter()
+    tiff2hdf5("/scratch/test.hdf5", "/scratch/20211105_CSE020_plane1_-587.325_raw-013_tiffs")
+    end = perf_counter()
+
+    print(end - start)
