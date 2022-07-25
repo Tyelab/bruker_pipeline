@@ -19,6 +19,8 @@ def tiff2hdf5(
     images = dask.array.from_zarr(store)
     print(images)
 
+
+
     with h5py.File(hdf5file, 'w') as hdf:
 
         dataset = hdf.create_dataset(
@@ -38,5 +40,5 @@ def tiff2hdf5(
 
 with tifffile.Timer():
     tiff2hdf5(
-        '/scratch/test_none.hdf5', '/scratch/20211112_CSE012_plane1/*Ch2*.tif',
+        '/scratch/christoph.hdf5', '/scratch/snlkt2p/20211105_CSE020_plane1_-587.325_raw-013_tiffs/*Ch2*.tif',
     )
