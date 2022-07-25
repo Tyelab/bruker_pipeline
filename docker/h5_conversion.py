@@ -12,6 +12,7 @@ from imagecodecs import tiff_decode
 from numcodecs.blosc import Blosc
 from pathlib import Path
 from time import perf_counter
+import h5py
 
 
 def tiff2hdf5(
@@ -87,13 +88,27 @@ def tiff2hdf5(
 
     # You can operate on the images dask array object to finally output
     # everything into the HDF5 file that's specified in the input argument
-    images.to_hdf5(hdf5file, dataset_name, chunks=chunksize, compressor=Blosc)
+    with h5py.File(hdf5file, 'w') as hdf:
+
+        dataset = hdf.create_dataset(
+            dataset_name,
+            shape=images.shape,
+            dtype=images.dtype,
+            chunks=(chunksize, *images.shape[1:]),
+            compression="lzf",
+        )
+
+        for index in range(0, images.shape[0], chunksize):
+            print(index)
+            dataset[index : index + chunksize] = images[
+                index : index + chunksize
+            ]
 
 
 if __name__ =="__main__":
 
     start = perf_counter()
-    tiff2hdf5("/scratch/test.hdf5", "/scratch/20211105_CSE020_plane1_-587.325_raw-013_tiffs")
+    tiff2hdf5("/scratch/snlkt2p/20220720_LHE055_plane1_-465.6_raw-006.hdf5", Path("/scratch/snlkt2p/20220720_LHE055_plane1_-465.6_raw-006_tiffs"))
     end = perf_counter()
 
     print(end - start)
