@@ -1,6 +1,6 @@
 # docker-wine is a compatability layer between Windows and Linux.  Allows you to run Windows programs on Linux machines.
 # NOTE: Do NOT use latest docker-wine repo, it will fail to use Visual C++ correctly for some reason...
-FROM scottyhardy/docker-wine:stable-5.0.2-nordp
+FROM scottyhardy/docker-wine:latest
 
 # All credit for this Dockerfile and associated ripping tools goes to Chris Roat, a former software engineer at Stanford in the Deisseroth Lab
 # https://github.com/chrisroat

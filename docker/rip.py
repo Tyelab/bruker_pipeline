@@ -221,8 +221,8 @@ def raw_to_tiff(raw_dir: Path, ripper_version: str, num_images: int):
     # the csv converter should be called. If not, it should be skipped.
 
     # It takes a few seconds for the ripper to get started and create the csv file
-    # Sleep the program for 10 seconds and then get the csv file
-    time.sleep(10)
+    # Sleep the program and get the csv file
+    time.sleep(20)
 
     behavior_glob = tmp_tiff_dir.glob("*")
 

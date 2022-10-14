@@ -1,6 +1,0 @@
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211112/20211112_CSE012_plane1_-317.025_raw-033
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211119/20211119_CSE012_plane1_-257.25_raw-053
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211126/20211126_CSE012_plane1_-304.7_raw-073
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211203/20211203_CSE012_plane1_-349.825_raw-091
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211210/20211210_CSE012_plane1_-281.275_raw-109
-/snlkt/data/_DATA/specialk_cs/2p/raw/CSE012/20211215/20211215_CSE012_plane1_-322.225_raw-127

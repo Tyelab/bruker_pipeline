@@ -108,7 +108,7 @@ def tiff2hdf5(
 if __name__ =="__main__":
 
     start = perf_counter()
-    tiff2hdf5("/scratch/snlkt2p/20220720_LHE055_plane1_-465.6_raw-006.hdf5", Path("/scratch/snlkt2p/20220720_LHE055_plane1_-465.6_raw-006_tiffs"))
+    tiff2hdf5("/snlkt/specialk_lh/2p/raw/LHE060/20221013/20221013_LHE060_plane1_-410.55_raw-005.hdf5", Path("/snlkt/specialk_lh/2p/raw/LHE060/20221013/20221013_LHE060_plane1_-410.55_raw-005_tiffs"))
     end = perf_counter()
 
     print(end - start)
