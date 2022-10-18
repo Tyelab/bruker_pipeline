@@ -12,11 +12,11 @@ This repository will remain specific for the ripping process for data coming off
 The main executable is a program called `beyblade.sh`. In short, this will grab a list of directories that need conversion from a directory called `raw_conversion`,
 spawn a Docker container for each ripper, and write out .ome.tif files to a folder locally. Conversions from tiffs to H5 can be executed via a separate script in `MATLAB` or `Python` depending on your use case. The steps are as follows:
 
-1. Sign into `cheetos.snl.salk.edu`. This is currently the only machine with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
+1. Sign into `cheetos.snl.salk.edu` or 'doritos.snl.salk.edu'. These are currently the only machines with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
 
 2. Navigate to `/snlkt/data/bruker_pipeline` via the `cd` command, as in: `cd /snlkt/data/bruker_pipeline/`
 
-3. Create a `.txt` file containing the *full paths* to your data on the server. The file should look something like this:
+3. Create a `.txt` file containing the *full paths* to your data on the server if they don't exist already. If you're using `bruker_control` and its transfer script the file will have been created and placed in the appropriate place already. The file should look something like this:
 
 ```
 /snlkt/data/_DATA/specialk_cs/2p/raw/CSC013/20211104/20211104_CSC013_plane1_-538.875_raw-003
@@ -54,3 +54,13 @@ If you want to ensure your containers are running, you can:
 - Go into the folder titled `logs` and find the recording you are converting for. The ripper logs what it is working on and if there's any issues with execution.
 
 If you have VS Code installed, updates made to the file will be presented to you in real time. If not, you'll have to close and reload the file to see progress.
+
+
+## Building a New Image
+If you've made an update to the container's code or Dockerfile build procedures, you'll have to rebuild the Image on the different server machines.
+Once you've saved your changes, navigate to the `docker` directory and type:
+`make`
+
+This will execute a Makefile that contains the instructions for rebuilding and labeling/naming the updated image the containers will run on.
+
+Note that you *must* be a member of the Docker group to do this which gives you a sort of watered down `sudo` privilige to execute containers on the server.
