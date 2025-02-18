@@ -12,7 +12,7 @@ This repository will remain specific for the ripping process for data coming off
 The main executable is a program called `beyblade.sh`. In short, this will grab a list of directories that need conversion from a directory called `raw_conversion`,
 spawn a Docker container for each ripper, and write out .ome.tif files to a folder locally. Conversions from tiffs to H5 can be executed via a separate script in `MATLAB` or `Python` depending on your use case. The steps are as follows:
 
-1. Sign into `cheetos.snl.salk.edu` or 'doritos.snl.salk.edu'. These are currently the only machines with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
+1. Sign into `cheetos.snl.salk.edu` or `doritos.snl.salk.edu`. These are currently the only machines with the Docker image reproduced on it. You can use either `MobaXterm` or the Windows `Powershell`.
 
 2. Navigate to `/snlkt/data/bruker_pipeline` via the `cd` command, as in: `cd /snlkt/data/bruker_pipeline/`
 
